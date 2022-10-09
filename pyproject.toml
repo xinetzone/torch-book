@@ -12,7 +12,7 @@ requires-python = ">=3.8"
 
 dependencies = [
   "d2py",
-  "pydata_sphinx_theme"
+  "xyzstyle"
 ]
 
 maintainers = [
@@ -54,9 +54,9 @@ test = [
   "torch_book[doc]",
 ]
 
-[project.entry-points]
-"sphinx.html_themes" = {torch_book = "torch_book"}
+[tool.flit.module]
+name = "torch_book"
 
 [tool.flit.sdist]
 # include = ["docs/"]
-exclude = ['docs', '.git', '.github']
+exclude = ['doc', '.git', '.github']
