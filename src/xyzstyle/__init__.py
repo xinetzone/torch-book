@@ -15,8 +15,7 @@ def get_html_theme_path():
     Return path to Sphinx templates folder.
     """
     parent = Path(__file__).parent.resolve()
-    theme_path = parent / "themes" / "xyzstyle"
-    return theme_path
+    return parent / "themes" / "xyzstyle"
 
 
 def get_html_template_path():
