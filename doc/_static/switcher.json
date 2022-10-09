@@ -1,0 +1,17 @@
+[
+  {
+    "name": "main",
+    "version": "main",
+    "url": "https://xinetzone.github.io/xyzstyle/"
+  },
+  {
+    "name": "dev",
+    "version": "latest",
+    "url": "https://xyzstyle.readthedocs.io/zh/latest/"
+  },
+  {
+    "name": "v0.0.2",
+    "version": "v0.0.2",
+    "url": "https://xyzstyle.readthedocs.io/zh/v0.0.2/"
+  }
+]

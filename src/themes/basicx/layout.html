@@ -1,0 +1,21 @@
+{% extends "!basic/layout.html" %}
+{%- block extrahead %}
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="{{ pathto('_static/images/favicon.jpg', 1) }}">
+    {%- if hasdoc('genindex') %}
+        <link rel="index" title="{{ _('Index') }}" href="{{ pathto('genindex') }}"/>
+    {%- endif %}
+    <link rel="stylesheet" href="{{ pathto('_static/css/default.css', 1) }}"/>
+    <link rel="stylesheet" href="{{ pathto('_static/css/custom.css', 1) }}"/>
+{% endblock %}
+
+{% block header %}
+<div class="pageheader">
+    <div id="logo-container">
+        {% if logo %}
+        <a href="{{ pathto(index) }}"><img src="{{ pathto('_static/images/logo.jpg', 1) }}"></a>
+        {% else %}
+        <h1>{{ project }}</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
