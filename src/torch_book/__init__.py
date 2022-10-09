@@ -1,8 +1,3 @@
-"""Torch demo."""
-import sys
+"""Dive into Torch Book."""
 
-if sys.platform == 'win32':
-    import asyncio
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-__version__ = '0.0.1'
+__version__ = "0.0.2"

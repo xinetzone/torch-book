@@ -5,7 +5,7 @@
     "url": "https://xinetzone.github.io/torch-book/"
   },
   {
-    "name": "dev",
+    "name": "RTD",
     "version": "latest",
     "url": "https://torch-book.readthedocs.io/zh_CN/latest/"
   }

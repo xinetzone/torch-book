@@ -9,6 +9,9 @@ import torch_book
 # The full version, including alpha/beta/rc tags
 release = torch_book.__version__
 
+if sys.platform == 'win32':
+    import asyncio
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 def setup(app):
     app.add_object_type('confval', 'confval',
