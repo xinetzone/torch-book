@@ -4,7 +4,8 @@
 ```{toctree}
 :maxdepth: 2
 
-config
+tutorial/index
+others/index
 ```
 
 ## 目录和索引

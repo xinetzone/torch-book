@@ -42,6 +42,7 @@ extensions = [
     'sphinx_copybutton',
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
+    "sphinxcontrib.bibtex",
     # 'sphinx.ext.autosectionlabel',
     'sphinx.ext.napoleon',
 ]
@@ -88,18 +89,12 @@ html_theme_options = {
     "footer_items": ["copyright", "last-updated", "sphinx-version", ],
 }
 
-intersphinx_mapping = {
-    'python': ('https://daobook.github.io/cpython/', None),
-    'sphinx': ('https://daobook.github.io/sphinx/', None),
-    'peps': ('https://daobook.github.io/peps', None),
-}
-
 # MyST-NB 设置
 # 如果你希望stderr和stdout中的每个输出都被合并成一个流，请使用以下配置。
 # 避免将 jupter 执行报错的信息输出到 cmd
 nb_merge_streams = True
 nb_execution_allow_errors = True
-nb_execution_mode = "cache" #'off'
+nb_execution_mode = "off" # "cache"
 
 nb_mime_priority_overrides = [
     ('html', 'text/plain', 0),  # 最高级别
@@ -166,4 +161,30 @@ html_sidebars = {
         "custom-template",
     ],  # This ensures we test for custom sidebars
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+}
+
+bibtex_bibfiles = ["refs.bib"]
+bibtex_reference_style = "author_year"
+
+myst_enable_extensions = [
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "html_admonition",
+    "replacements",
+    "smartquotes",
+    "substitution",
+    "tasklist",
+    # "linkify",
+]
+
+intersphinx_mapping = {
+    'python': ('https://daobook.github.io/cpython/', None),
+    'sphinx': ('https://daobook.github.io/sphinx/', None),
+    'peps': ('https://daobook.github.io/peps', None),
+    'pytorch': ('https://pytorch.org/docs/stable', None),
+    'pytorchx': ("https://xinetzone.github.io/pytorch-book/api", None),
+    'torchvision': ('https://pytorch.org/vision/stable', None),
+    'torchtext': ('https://pytorch.org/text/stable/', None),
+    'torchaudio': ('https://pytorch.org/audio/stable/', None)
 }
