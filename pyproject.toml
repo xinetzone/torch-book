@@ -41,7 +41,8 @@ doc = [
   "sphinxcontrib-bibtex",
   "sphinx-thebe",
   "sphinx-comments",
-  "matplotlib"
+  "matplotlib",
+  "sphinx-automodapi"
 ]
 
 coverage = [
