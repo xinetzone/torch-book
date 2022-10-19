@@ -40,7 +40,8 @@ doc = [
   "sphinx-design",
   "sphinxcontrib-bibtex",
   "sphinx-thebe",
-  "sphinx-comments"
+  "sphinx-comments",
+  "matplotlib"
 ]
 
 coverage = [
