@@ -36,6 +36,10 @@ doc = [
   "myst-nb",
   "sphinxext-rediraffe",
   "sphinx-copybutton",
+  "sphinxcontrib-mermaid",
+  "sphinx-design",
+  "sphinxcontrib-bibtex",
+  "sphinx-thebe"
 ]
 
 coverage = [
