@@ -43,8 +43,14 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     "sphinxcontrib.bibtex",
+    "sphinx_thebe",
     # 'sphinx.ext.autosectionlabel',
+    "sphinx_comments",
+    "sphinxcontrib.mermaid",
+    "matplotlib.sphinxext.plot_directive",
     'sphinx.ext.napoleon',
+    "sphinx_automodapi.automodapi",
+    "sphinx_design",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -97,9 +103,21 @@ nb_execution_allow_errors = True
 nb_execution_mode = "off" # "cache"
 
 nb_mime_priority_overrides = [
-    ('html', 'text/plain', 0),  # 最高级别
-    ('latex', 'image/jpeg', None),  # 禁用
-    # ('*', 'customtype', 20)
+    ("html", "text/html", 0),
+    ("latex", "text/latex", 20),
+    ("html", "application/vnd.plotly.v1+json", 10),
+    # ("image", "image/svg+xml", None)
+    # (
+    #     "application/vnd.jupyter.widget-view+json",
+    #     "application/javascript",
+    #     "text/html",
+    #     "image/svg+xml",
+    #     "image/png",
+    #     "image/jpeg",
+    #     "text/markdown",
+    #     "text/latex",
+    #     "text/plain",
+    # ), 0)
 ]
 
 # -- 国际化输出 ----------------------------------------------------------------
@@ -168,15 +186,26 @@ bibtex_reference_style = "author_year"
 
 myst_enable_extensions = [
     "colon_fence",
+    "amsmath",
     "deflist",
     "dollarmath",
     "html_admonition",
+    "html_image",
     "replacements",
     "smartquotes",
     "substitution",
     "tasklist",
     # "linkify",
 ]
+
+comments_config = {
+    "hypothesis": True,
+    "dokieli": False,
+    "utterances": {
+        "repo": "xinetzone/torch-book",
+        "optional": "config",
+    }
+}
 
 intersphinx_mapping = {
     'python': ('https://daobook.github.io/cpython/', None),
