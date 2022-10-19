@@ -39,7 +39,8 @@ doc = [
   "sphinxcontrib-mermaid",
   "sphinx-design",
   "sphinxcontrib-bibtex",
-  "sphinx-thebe"
+  "sphinx-thebe",
+  "sphinx-comments"
 ]
 
 coverage = [
