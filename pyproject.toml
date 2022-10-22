@@ -33,6 +33,7 @@ Home = "https://github.com/xinetzone/torch-book"
 [project.optional-dependencies]
 doc = [
   "myst-nb",
+  "sphinx-book-theme",
   "sphinxext-rediraffe",
   "sphinx-copybutton",
   "sphinxcontrib-mermaid",
