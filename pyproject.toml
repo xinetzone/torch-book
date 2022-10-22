@@ -11,8 +11,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 
 dependencies = [
-  "d2py",
-  "xyzstyle"
+  "d2py"
 ]
 
 maintainers = [

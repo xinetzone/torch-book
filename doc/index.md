@@ -5,6 +5,7 @@
 :maxdepth: 2
 
 tutorial/index
+paper/index
 others/index
 ```
 

@@ -36,14 +36,14 @@ author = 'xinetzone'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'xyzstyle',
+    # 'xyzstyle',
     'myst_nb',
     'sphinx.ext.intersphinx',
     'sphinx_copybutton',
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     "sphinxcontrib.bibtex",
-    "sphinx_thebe",
+    # "sphinx_thebe",
     # 'sphinx.ext.autosectionlabel',
     "sphinx_comments",
     "sphinxcontrib.mermaid",
@@ -74,7 +74,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'xyzstyle'
+html_theme = 'sphinx_book_theme'
 # html_theme_path = [f'{ROOT}/src/torch_book/themes']
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -156,13 +156,29 @@ autosummary_generate = True
 html_theme_options = {
     "footer_items": ["copyright", "last-updated", "sphinx-version", ],
     "github_url": "https://github.com/xinetzone/torch-book",
+    "use_issues_button": True,  # 默认 `False`
+    # -- 在导航栏添加一个按钮，以下载页面的源文件。
+    "use_download_button": True,  # 默认 `True`
+    # 你可以在每个页面添加一个按钮，允许用户直接编辑页面文本，
+    # 并提交拉动请求以更新文档。
     "use_edit_page_button": True,
+    # 在导航栏添加一个按钮来切换全屏的模式。
+    "use_fullscreen_button": True,  # 默认 `True`
     "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
     "switcher": {
         "json_url": json_url,
         "version_match": switcher_version
     },
-
+    "repository_url": "https://github.com/xinetzone/torch-book",
+    "launch_buttons": {
+        # https://mybinder.org/v2/gh/xinetzone/d2py/main
+        "binderhub_url": "https://mybinder.org",
+        # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
+        "colab_url": "https://colab.research.google.com/",
+        # 你可以控制有人点击启动按钮时打开的界面。
+        "notebook_interface": "jupyterlab",
+        # "thebe": True,  # Thebe 实时代码单元格
+    },
 }
 
 html_context = {
