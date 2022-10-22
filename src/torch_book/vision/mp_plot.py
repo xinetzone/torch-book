@@ -1,6 +1,11 @@
 from matplotlib import pyplot as plt
 from matplotlib_inline import backend_inline
 from IPython import display
+import matplotlib as mpl
+
+# matplotlib 其实是不支持显示中文的 显示中文需要一行代码设置字体
+mpl.rcParams['font.family'] = 'SimHei'
+plt.rcParams['axes.unicode_minus'] = False # （解决坐标轴负数的负号显示问题）
 
 
 def use_svg_display():
