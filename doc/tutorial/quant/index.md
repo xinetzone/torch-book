@@ -8,8 +8,8 @@ fixed-point
 design
 workflow/index
 practice
-sigmoid
 tanh
+sigmoid-fx/index
 ns
 resnext_demo8
 taylor
