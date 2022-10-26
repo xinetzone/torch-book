@@ -3,6 +3,7 @@ from torch import nn
 from .runner import Accumulator, Timer
 from .vision.mp_plot import Animator
 
+
 class Fx:
     ones = torch.ones
     zeros = torch.zeros
@@ -57,7 +58,7 @@ def accuracy(y_hat, y):
     cmp = Fx.astype(y_hat, y.dtype) == y
     return float(Fx.reduce_sum(Fx.astype(cmp, y.dtype)))
 
-def evaluate_accuracy_gpu(net, data_iter, device=None): #@save
+def evaluate_accuracy(net, data_iter, device=None):
     """使用 GPU 计算模型在数据集上的精度"""
     if isinstance(net, nn.Module):
         net.eval()  # 设置为评估模式
@@ -76,43 +77,69 @@ def evaluate_accuracy_gpu(net, data_iter, device=None): #@save
             metric.add(accuracy(net(X), y), y.numel())
     return metric[0] / metric[1]
 
-def train(net, train_iter, test_iter, num_epochs, lr, device):
+def train_batch(net, X, y, loss, trainer, devices):
+    """Train for a minibatch with mutiple GPUs."""
+    if isinstance(X, list):
+        # Required for BERT fine-tuning (to be covered later)
+        X = [x.to(devices[0]) for x in X]
+    else:
+        X = X.to(devices[0])
+    y = y.to(devices[0])
+    net.train()
+    trainer.zero_grad()
+    pred = net(X)
+    l = loss(pred, y)
+    l.sum().backward()
+    trainer.step()
+    train_loss_sum = l.sum()
+    train_acc_sum = accuracy(pred, y)
+    return train_loss_sum, train_acc_sum
+
+def train(net, train_iter, valid_iter, 
+          num_epochs, devices,
+          optimizer, scheduler):
     """用 GPU 训练模型"""
-    def init_weights(m):
-        if type(m) == nn.Linear or type(m) == nn.Conv2d:
-            nn.init.xavier_uniform_(m.weight)
-    net.apply(init_weights)
-    print('training on', device)
-    net.to(device)
-    optimizer = torch.optim.SGD(net.parameters(), lr=lr)
-    loss = nn.CrossEntropyLoss()
+    # def init_weights(m):
+    #     if type(m) == nn.Linear or type(m) == nn.Conv2d:
+    #         nn.init.xavier_uniform_(m.weight)
+    # net.apply(init_weights)
+    print('training on', devices)
+    if torch.device('cpu') not in devices:
+        net = nn.DataParallel(net, device_ids=devices).to(devices[0])
+    
+    # scheduler = torch.optim.lr_scheduler.StepLR(trainer, 
+    #                                             step_size=lr_period, 
+    #                                             gamma=lr_decay)
+    # loss = nn.CrossEntropyLoss()
+    loss = nn.CrossEntropyLoss(reduction="none")
     animator = Animator(xlabel='epoch', xlim=[1, num_epochs],
                         ylim=[0, 1],
                         legend=['train loss', 'train acc', 'test acc'])
     timer, num_batches = Timer(), len(train_iter)
+    
     for epoch in range(num_epochs):
         # 训练损失之和，训练准确率之和，样本数
         metric = Accumulator(3)
         net.train()
-        for i, (X, y) in enumerate(train_iter):
+        for i, (features, labels) in enumerate(train_iter):
             timer.start()
-            optimizer.zero_grad()
-            X, y = X.to(device), y.to(device)
-            y_hat = net(X)
-            l = loss(y_hat, y)
-            l.backward()
-            optimizer.step()
+            l, acc = train_batch(net, features, labels,
+                                 loss, optimizer, devices)
+            
             with torch.no_grad():
-                metric.add(l * X.shape[0], accuracy(y_hat, y), X.shape[0])
+                metric.add(l, acc, labels.shape[0])
             timer.stop()
-            train_l = metric[0] / metric[2]
-            train_acc = metric[1] / metric[2]
             if (i + 1) % (num_batches // 5) == 0 or i == num_batches - 1:
                 animator.add(epoch + (i + 1) / num_batches,
-                             (train_l, train_acc, None))
-        test_acc = evaluate_accuracy_gpu(net, test_iter)
-        animator.add(epoch + 1, (None, None, test_acc))
-    print(f'loss {train_l:.3f}, train acc {train_acc:.3f}, '
-          f'test acc {test_acc:.3f}')
-    print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec '
-          f'on {str(device)}')
+                             (metric[0] / metric[2], metric[1] / metric[2],
+                              None))
+        if valid_iter is not None:
+            valid_acc = evaluate_accuracy(net, valid_iter)
+            animator.add(epoch + 1, (None, None, valid_acc))
+        scheduler.step()
+        measures = (f'train loss {metric[0] / metric[2]:.3f}, '
+                f'train acc {metric[1] / metric[2]:.3f}')
+    if valid_iter is not None:
+        measures += f', valid acc {valid_acc:.3f}'
+    print(measures + f'\n{metric[2] * num_epochs / timer.sum():.1f}'
+          f' examples/sec on {str(devices)}')
