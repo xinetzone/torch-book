@@ -13,6 +13,7 @@
 [![PyPI - Downloads][install-badge]][install-link]
 ![repo size](https://img.shields.io/github/repo-size/xinetzone/torch-book.svg)
 [![Downloads Week](https://pepy.tech/badge/torch-book/week)](https://pepy.tech/project/torch-book)
+[![Documentation Status][rtd-badge]][rtd-link]
 
 Torch 手册。
 
@@ -38,6 +39,8 @@ Torch 手册。
 [status-link]: https://torch-book.readthedocs.io/zh/latest/?badge=latest
 [download-badge]: https://pepy.tech/badge/torch-book
 [download-link]: https://pepy.tech/project/torch-book
+[rtd-badge]: https://readthedocs.org/projects/torch-book/badge/?version=latest
+[rtd-link]: https://torch-book.readthedocs.io/zh/latest/?badge=latest
 
 ## 支持 PyPI
 
