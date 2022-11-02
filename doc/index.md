@@ -8,6 +8,7 @@ tutorial/index
 refs/index
 paper/index
 others/index
+notion
 ```
 
 ## 目录和索引

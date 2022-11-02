@@ -21,7 +21,7 @@
 
 相应的实现会根据 PyTorch 构建模式自动选择，不过用户可以通过将 `torch.backends.quantization.engine` 设置为 `'fbgemm'` 或 `'qnnpack'` 来覆盖这个选项。
 
-量化感知训练（通过 {mod}`~torch.quantization.FakeQuantize`，它模拟 FP32 中的量化数字）支持 CPU 和 CUDA。
+量化感知训练（通过 {mod}`~torch.ao.quantization.FakeQuantize`，它模拟 FP32 中的量化数字）支持 CPU 和 CUDA。
 
 `qconfig` 控制量化传递期间使用的观测器器类型。当对线性和卷积函数和模块进行打包权重时，`qengine` 控制是使用 `fbgemm` 还是 `qnnpack` 特定的打包函数。例如：
 
@@ -40,7 +40,7 @@ PyTorch 提供了两种不同的量化模式：Eager 模式量化和 FX 图模�
 
 Eager 模式量化是 beta 特性。用户需要进行融合，并手动指定量化和反量化发生的位置，而且它只支持模块而不支持函数。
 
-FX 图模式量化是 PyTorch 中新的自动量化框架，目前它是原型特性。它通过添加对函数的支持和量化过程的自动化，对 Eager 模式量化进行了改进，尽管人们可能需要重构模型，以使模型与 FX Graph 模式量化兼容（通过 `torch.fx` 符号可追溯）。注意 FX 图模式量化预计不会在任意工作模型由于模型可能不是符号可追溯，我们会将其集成到域库 torchvision 和用户将能够量化模型类似于支持域的库与 FX 图模式量化。对于任意的模型，我们将提供一般的指导方针，但要让它实际工作，用户可能需要熟悉 `torch.fx`，特别是如何使模型具有符号可追溯性。
+FX 图模式量化是 PyTorch 中新的自动量化框架，目前它是原型特性。它通过添加对函数的支持和量化过程的自动化，对 Eager 模式量化进行了改进，尽管人们可能需要重构模型，以使模型与 FX Graph 模式量化兼容（通过 {mod}`torch.fx` 符号可追溯）。注意 FX 图模式量化预计不会在任意工作模型由于模型可能不是符号可追溯，我们会将其集成到域库 torchvision 和用户将能够量化模型类似于支持域的库与 FX 图模式量化。对于任意的模型，我们将提供一般的指导方针，但要让它实际工作，用户可能需要熟悉 `torch.fx`，特别是如何使模型具有符号可追溯性。
 
 新用户的量化鼓励首先尝试 FX 图模式量化，如果它不工作，用户可以尝试遵循[使用 FX 图模式量化的指导方针](https://pytorch.org/tutorials/prototype/fx_graph_mode_quant_guide.html)或回落到 Eager 模式量化。
 
@@ -53,7 +53,7 @@ FX 图模式量化是 PyTorch 中新的自动量化框架，目前它是原型�
 PyTorch 设计了 {mod}`torch.ao.quantization` 来适应 PyTorch 框架。这意味着：
 
 - PyTorch 具有与 [量化张量](QuantizedTensor) 对应的数据类型，它们具有张量的许多特性。
-- 可以用量化张量编写内核，就像浮点张量的内核一样，来定制它们的实现。PyTorch 支持 `quantized` 模块，用于通用运算，作为 `torch.nn.quantized` 和 `torch.nn.quantized.dynamic` 名称空间的一部分。
+- 可以用量化张量编写内核，就像浮点张量的内核一样，来定制它们的实现。PyTorch 支持 `quantized` 模块，用于通用运算，作为 {mod}`torch.nn.quantized` 和 {mod}`torch.nn.quantized.dynamic` 名称空间的一部分。
 - 量化与 PyTorch 的其余部分兼容：量化模型是 traceable 和 scriptable。对于服务器和移动后端，量化方法实际上是相同的。可以很容易地在模型中混合量化和浮点运算。
 - 浮点张量到量化张量的映射可以通过用户定义的 observer/fake-quantization 块进行定制。PyTorch 提供了默认的实现，应该适用于大多数用例。
 
@@ -63,9 +63,9 @@ PyTorch 设计了 {mod}`torch.ao.quantization` 来适应 PyTorch 框架。这意
 
 PyTorch 支持的最简单的量化方法称为动态量化（dynamic quantization）。这不仅涉及到将权值转换为 int8（就像所有量化变量中发生的那样），还涉及到在执行计算之前动态地将激活转换为 int8（因此是动态的）。因此，计算将使用高效的 int8 矩阵乘法和卷积实现来执行，从而获得更快的计算速度。但是，激活是用浮点格式读写到内存中的。
 
-在 PyTorch 中有简单的动态量化API `torch.quantization.quantize_dynamic`，它接受模型以及几个其他参数，并生成量化模型。
+在 PyTorch 中有简单的动态量化 API {func}`~torch.nn.quantized.dynamic.quantize_dynamic`，它接受模型以及几个其他参数，并生成量化模型。
 
-[端到端教程](https://pytorch.org/tutorials/intermediate/dynamic_quantization_bert_tutorial.html)为 BERT 模型演示了这一点；虽然教程很长，包含了加载预训练模型和其他与量化无关的概念的部分，但量化 BERT 模型的部分很简单。
+[端到端教程](https://pytorch.org/tutorials/intermediate/dynamic_quantization_bert_tutorial.html) 为 BERT 模型演示了这一点；虽然教程很长，包含了加载预训练模型和其他与量化无关的概念的部分，但量化 BERT 模型的部分很简单。
 
 ```python
 from torch.quantization.quantize import quantize_dynamic

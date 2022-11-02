@@ -9,7 +9,7 @@ plt.rcParams['axes.unicode_minus'] = False # （解决坐标轴负数的负号�
 
 
 def use_svg_display():
-    """使用 svg 格式在Jupyter中显示绘图"""
+    """使用 svg 格式在 Jupyter 中显示绘图"""
     backend_inline.set_matplotlib_formats('svg')
     
 def set_figsize(figsize=(3.5, 2.5)):
@@ -32,7 +32,11 @@ def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
 def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
          ylim=None, xscale='linear', yscale='linear',
          fmts=('-', 'm--', 'g-.', 'r:'), figsize=(3.5, 2.5), axes=None):
-    """绘制数据点"""
+    """绘制数据点
+    这里 `Y` 可以是一组数据，比如
+        >>> x = np.arange(0, 3, 0.1)
+        >>> plot(x, [f(x), 2 * x - 3], 'x', 'f(x)', legend=['f(x)', 'Tangent line (x=1)'])
+    """
     if legend is None:
         legend = []
 
