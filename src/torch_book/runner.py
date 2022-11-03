@@ -1,35 +1,34 @@
 from __future__ import annotations
 import time
-# import numpy as np
+import numpy as np
 
 
 class Timer:
-    """Record multiple running times."""
+    """记录多次运行时间"""
 
     def __init__(self):
-        """Defined in :numref:`subsec_linear_model`"""
         self.times = []
         self.start()
 
     def start(self):
-        """Start the timer."""
+        """启动计时器"""
         self.tik = time.time()
 
     def stop(self):
-        """Stop the timer and record the time in a list."""
+        """停止计时器并将时间记录在列表中"""
         self.times.append(time.time() - self.tik)
         return self.times[-1]
 
     def avg(self):
-        """Return the average time."""
+        """返回平均时间"""
         return sum(self.times) / len(self.times)
 
     def sum(self):
-        """Return the sum of time."""
+        """返回时间总和"""
         return sum(self.times)
 
     def cumsum(self):
-        """Return the accumulated time."""
+        """返回累积时间"""
         return np.array(self.times).cumsum().tolist()
 
 
@@ -37,7 +36,6 @@ class Accumulator:
     """For accumulating sums over `n` variables."""
 
     def __init__(self, n):
-        """Defined in :numref:`sec_softmax_scratch`"""
         self.data = [0.0] * n
 
     def add(self, *args):

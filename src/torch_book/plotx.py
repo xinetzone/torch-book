@@ -29,6 +29,10 @@ def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
         axes.legend(legend)
     axes.grid()
     
+def annotate(text, xy, xytext):
+    plt.gca().annotate(text, xy=xy, xytext=xytext,
+                       arrowprops={"arrowstyle": "->"})
+    
 def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
          ylim=None, xscale='linear', yscale='linear',
          fmts=('-', 'm--', 'g-.', 'r:'), figsize=(3.5, 2.5), axes=None):

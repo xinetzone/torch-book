@@ -162,6 +162,7 @@ html_theme_options = {
     # 你可以在每个页面添加一个按钮，允许用户直接编辑页面文本，
     # 并提交拉动请求以更新文档。
     "use_edit_page_button": True,
+    "repository_branch": "main",
     # 在导航栏添加一个按钮来切换全屏的模式。
     "use_fullscreen_button": True,  # 默认 `True`
     "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
