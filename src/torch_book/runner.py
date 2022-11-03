@@ -32,6 +32,21 @@ class Timer:
         return np.array(self.times).cumsum().tolist()
 
 
+class Benchmark:
+    """For measuring running time."""
+
+    def __init__(self, description='Done'):
+        """Defined in :numref:`sec_hybridize`"""
+        self.description = description
+
+    def __enter__(self):
+        self.timer = Timer()
+        return self
+
+    def __exit__(self, *args):
+        print(f'{self.description}: {self.timer.stop():.4f} sec')
+
+
 class Accumulator:
     """For accumulating sums over `n` variables."""
 

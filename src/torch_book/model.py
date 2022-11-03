@@ -1,84 +1,54 @@
-from __future__ import annotations
-import copy
-import time
-import numpy as np
-import matplotlib.pyplot as plt
 import torch
+from torch import nn
+from .utils import HyperParameters
+from .plotx import ProgressBoard
 
 
-def train_model(model, loader, criterion, optimizer, scheduler, num_epochs=25, device='cpu'):
-    """
-    模型训练所支持的函数
+class Module(nn.Module, HyperParameters):
+    def __init__(self, plot_train_per_epoch=2, plot_valid_per_epoch=1):
+        super().__init__()
+        self.save_hyperparameters()
+        self.board = ProgressBoard()
 
-    Args:
-      model: 待训练的模型
-      criterion: 优化准则 (loss)
-      optimizer: 用于训练的 Optimizer
-      scheduler: :mod:`torch.optim.lr_scheduler` 中的 LR 调度器对象
-      num_epochs: epochs 数量
-      device: 用来进行训练的设备。必须是 'cpu' 或 'cuda'
-    """
-    since = time.time()
+    def loss(self, y_hat, y):
+        raise NotImplementedError
 
-    best_model_wts = copy.deepcopy(model.state_dict())
-    best_acc = 0.0
-    model.to(device)
-    for epoch in range(num_epochs):
-        print(f'Epoch {epoch}/{num_epochs - 1}')
-        print('-' * 10)
+    def forward(self, X):
+        assert hasattr(self, 'net'), 'Neural network is defined'
+        return self.net(X)
 
-        # Each epoch has a training and validation phase
-        for phase in ['train', 'val']:
-            if phase == 'train':
-                model.train()  # Set model to training mode
-            else:
-                model.eval()   # Set model to evaluate mode
+    def plot(self, key, value, train):
+        """Plot a point in animation."""
+        assert hasattr(self, 'trainer'), 'Trainer is not inited'
+        self.board.xlabel = 'epoch'
+        if train:
+            x = self.trainer.train_batch_idx / \
+                self.trainer.num_train_batches
+            n = self.trainer.num_train_batches / \
+                self.plot_train_per_epoch
+        else:
+            x = self.trainer.epoch + 1
+            n = self.trainer.num_val_batches / \
+                self.plot_valid_per_epoch
+        self.board.draw(x, numpy(to(value, cpu())),
+                        ('train_' if train else 'val_') + key,
+                        every_n=int(n))
 
-            running_loss = 0.0
-            running_corrects = 0
+    def training_step(self, batch):
+        l = self.loss(self(*batch[:-1]), batch[-1])
+        self.plot('loss', l, train=True)
+        return l
 
-            # Iterate over data.
-            for inputs, labels in loader.dataloaders[phase]:
-                inputs = inputs.to(device)
-                labels = labels.to(device)
+    def validation_step(self, batch):
+        l = self.loss(self(*batch[:-1]), batch[-1])
+        self.plot('loss', l, train=False)
 
-                # zero the parameter gradients
-                optimizer.zero_grad()
+    def configure_optimizers(self):
+        """Defined in :numref:`sec_classification`"""
+        return torch.optim.SGD(self.parameters(), lr=self.lr)
 
-                # forward
-                # track history if only in train
-                with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs)
-                    _, preds = torch.max(outputs, 1)
-                    loss = criterion(outputs, labels)
-
-                    # backward + optimize only if in training phase
-                    if phase == 'train':
-                        loss.backward()
-                        optimizer.step()
-
-                # statistics
-                running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
-            if phase == 'train':
-                scheduler.step()
-
-            epoch_loss = running_loss / loader.dataset_sizes[phase]
-            epoch_acc = running_corrects.double() / loader.dataset_sizes[phase]
-
-            print(f'{phase} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}')
-
-            # deep copy the model
-            if phase == 'val' and epoch_acc > best_acc:
-                best_acc = epoch_acc
-                best_model_wts = copy.deepcopy(model.state_dict())
-
-        print()
-
-    time_elapsed = time.time() - since
-    print(f'完成训练用时 {time_elapsed // 60:.0f}m {time_elapsed % 60:.0f}s')
-    print(f'最佳 val Acc: {best_acc:4f}')
-
-    # load best model weights
-    model.load_state_dict(best_model_wts)
-    return model
+    def apply_init(self, inputs, init=None):
+        """Defined in :numref:`sec_lazy_init`"""
+        self.forward(*inputs)
+        if init is not None:
+            self.net.apply(init)

@@ -2,6 +2,5 @@
 
 ```{toctree}
 sigmoid
-lenet
 cifar10-resnet18
 ```

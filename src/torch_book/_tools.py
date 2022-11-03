@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from .runner import Accumulator, Timer
-from .vision.mp_plot import Animator
+from .plotx import Animator
 
 
 class Fx:
@@ -59,7 +59,7 @@ def accuracy(y_hat, y):
     return float(Fx.reduce_sum(Fx.astype(cmp, y.dtype)))
 
 def evaluate_accuracy(net, data_iter, device=None):
-    """使用 GPU 计算模型在数据集上的精度"""
+    """计算模型在数据集上的精度"""
     if isinstance(net, nn.Module):
         net.eval()  # 设置为评估模式
         if not device:
@@ -111,7 +111,8 @@ def train(net, train_iter, valid_iter,
     #                                             step_size=lr_period, 
     #                                             gamma=lr_decay)
     # loss = nn.CrossEntropyLoss()
-    loss = nn.CrossEntropyLoss(reduction="none")
+    # https://zh.d2l.ai/chapter_linear-networks/softmax-regression-concise.html
+    loss = nn.CrossEntropyLoss(reduction="none") # ”LogSumExp技巧” 
     animator = Animator(xlabel='epoch', xlim=[1, num_epochs],
                         ylim=[0, 1],
                         legend=['train loss', 'train acc', 'test acc'])
