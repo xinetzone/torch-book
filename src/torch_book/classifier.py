@@ -1,5 +1,5 @@
 from torch.nn import functional as F
-from torch import float32, randn
+from torch import float32, randn, no_grad, nn
 from .model import Module
 from .runner import Accumulator
 
@@ -69,14 +69,23 @@ class Classifier(Module):
         for layer in self.net:
             X = layer(X)
             print(layer.__class__.__name__, 'output shape:\t', X.shape)
-
-def evaluate_loss(net, data_iter, loss):
-    """Evaluate the loss of a model on the given dataset."""
-    metric = Accumulator(2)  # Sum of losses, no. of examples
-    for X, y in data_iter:
-        out = net(X)
-        y = reshape(y, out.shape)
-        l = loss(out, y)
-        metric.add(reduce_sum(l), size(l))
-    return metric[0] / metric[1]
+            
+    def evaluate_accuracy(self, data_iter, device=None):
+        """计算模型在数据集上的精度"""
+        if isinstance(self, nn.Module):
+            self.eval()  # 设置为评估模式
+            if not device:
+                device = next(iter(self.parameters())).device
+        # 正确预测的数量，总预测的数量
+        metric = Accumulator(2)
+        with no_grad():
+            for X, y in data_iter:
+                if isinstance(X, list):
+                    # BERT 微调所需的
+                    X = [x.to(device) for x in X]
+                else:
+                    X = X.to(device)
+                y = y.to(device)
+                metric.add(self.accuracy(self(X), y), y.numel())
+        return metric[0] / metric[1]
 

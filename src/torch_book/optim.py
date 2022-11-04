@@ -1,4 +1,5 @@
 import torch
+from torch.optim import lr_scheduler
 from .utils import HyperParameters
 from .backend.gpu import gpu, num_gpus as _num_gpus
 
@@ -6,7 +7,9 @@ from .backend.gpu import gpu, num_gpus as _num_gpus
 _to = lambda x, *args, **kwargs: x.to(*args, **kwargs)
 
 class Trainer(HyperParameters):
-    def __init__(self, max_epochs, num_gpus=0, gradient_clip_val=0):
+    def __init__(self, max_epochs,
+                 num_gpus=0, 
+                 gradient_clip_val=0):
         self.save_hyperparameters()
         self.gpus = [gpu(i) for i in range(min(num_gpus, _num_gpus()))]
 
@@ -18,7 +21,6 @@ class Trainer(HyperParameters):
                                 if self.val_dataloader is not None else 0)
 
     def prepare_batch(self, batch):
-        """Defined in :numref:`sec_use_gpu`"""
         if self.gpus:
             batch = [_to(a, self.gpus[0]) for a in batch]
         return batch
@@ -30,10 +32,37 @@ class Trainer(HyperParameters):
             model.to(self.gpus[0])
         self.model = model
         
-    def fit(self, model, data):
+    def prepare_scheduler(self, model,
+                          lr=0.00142857,
+                          momentum=0.857142,
+                          weight_decay=0.00857142,
+                          lr_period=4,
+                          lr_decay=0.857142,
+                          **kwargs):
+        self.optim = model.configure_optimizers(lr=lr,
+                                                momentum=momentum,
+                                                weight_decay=weight_decay,
+                                                **kwargs)
+        self.scheduler = lr_scheduler.StepLR(self.optim, 
+                                             step_size=lr_period, 
+                                             gamma=lr_decay)
+        
+    def fit(self, model, data,
+            lr=0.00142857,
+            momentum=0.857142,
+            weight_decay=0.00857142,
+            lr_period=4,
+            lr_decay=0.857142,
+            **kwargs):
         self.prepare_data(data)
         self.prepare_model(model)
-        self.optim = model.configure_optimizers()
+        self.prepare_scheduler(model,
+                               lr=0.00142857,
+                               momentum=momentum,
+                               weight_decay=weight_decay,
+                               lr_period=lr_period,
+                               lr_decay=lr_decay,
+                               **kwargs)
         self.epoch = 0
         self.train_batch_idx = 0
         self.val_batch_idx = 0
@@ -41,7 +70,6 @@ class Trainer(HyperParameters):
             self.fit_epoch()
 
     def fit_epoch(self):
-        """Defined in :numref:`sec_linear_scratch`"""
         self.model.train()
         for batch in self.train_dataloader:
             loss = self.model.training_step(self.prepare_batch(batch))
@@ -55,6 +83,7 @@ class Trainer(HyperParameters):
         if self.val_dataloader is None:
             return
         self.model.eval()
+        self.scheduler.step()
         for batch in self.val_dataloader:
             with torch.no_grad():
                 self.model.validation_step(self.prepare_batch(batch))

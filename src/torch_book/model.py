@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torch.optim import SGD
 from .utils import HyperParameters
 from .plotx import ProgressBoard
 
@@ -52,10 +53,19 @@ class Module(nn.Module, HyperParameters):
         l = self.loss(self(*batch[:-1]), batch[-1])
         self.plot('loss', l, train=False)
 
-    def configure_optimizers(self):
+    def configure_optimizers(self, 
+                             lr=0.00142857,
+                             momentum=0.857142,
+                             weight_decay=0.00857142,
+                             **kwargs):
         """默认情况下，使用随机梯度下降优化器。
         """
-        return torch.optim.SGD(self.parameters(), lr=self.lr)
+        return SGD(self.parameters(), 
+                   lr=lr,
+                   momentum=momentum,
+                   dampening=0,
+                   weight_decay=weight_decay,
+                   **kwargs)
 
     def apply_init(self, inputs, init=None):
         """Defined in :numref:`sec_lazy_init`"""
