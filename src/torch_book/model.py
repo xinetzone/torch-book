@@ -4,8 +4,17 @@ from .utils import HyperParameters
 from .plotx import ProgressBoard
 
 
+def _cpu():
+    return torch.device('cpu')
+
+
+_to = lambda x, *args, **kwargs: x.to(*args, **kwargs)
+_numpy = lambda x, *args, **kwargs: x.detach().numpy(*args, **kwargs)
+
+
 class Module(nn.Module, HyperParameters):
-    def __init__(self, plot_train_per_epoch=2, plot_valid_per_epoch=1):
+    def __init__(self, plot_train_per_epoch=2,
+                 plot_valid_per_epoch=1):
         super().__init__()
         self.save_hyperparameters()
         self.board = ProgressBoard()
@@ -30,7 +39,7 @@ class Module(nn.Module, HyperParameters):
             x = self.trainer.epoch + 1
             n = self.trainer.num_val_batches / \
                 self.plot_valid_per_epoch
-        self.board.draw(x, numpy(to(value, cpu())),
+        self.board.draw(x, _numpy(_to(value, _cpu())),
                         ('train_' if train else 'val_') + key,
                         every_n=int(n))
 
@@ -44,7 +53,8 @@ class Module(nn.Module, HyperParameters):
         self.plot('loss', l, train=False)
 
     def configure_optimizers(self):
-        """Defined in :numref:`sec_classification`"""
+        """默认情况下，使用随机梯度下降优化器。
+        """
         return torch.optim.SGD(self.parameters(), lr=self.lr)
 
     def apply_init(self, inputs, init=None):

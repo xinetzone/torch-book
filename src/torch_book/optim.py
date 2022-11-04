@@ -5,13 +5,10 @@ from .backend.gpu import gpu, num_gpus as _num_gpus
 
 _to = lambda x, *args, **kwargs: x.to(*args, **kwargs)
 
-
 class Trainer(HyperParameters):
-    """Defined in :numref:`sec_oo-design`"""
-
     def __init__(self, max_epochs, num_gpus=0, gradient_clip_val=0):
         self.save_hyperparameters()
-        assert num_gpus == 0, 'No GPU support yet'
+        self.gpus = [gpu(i) for i in range(min(num_gpus, _num_gpus()))]
 
     def prepare_data(self, data):
         self.train_dataloader = data.train_dataloader()
@@ -20,11 +17,19 @@ class Trainer(HyperParameters):
         self.num_val_batches = (len(self.val_dataloader)
                                 if self.val_dataloader is not None else 0)
 
+    def prepare_batch(self, batch):
+        """Defined in :numref:`sec_use_gpu`"""
+        if self.gpus:
+            batch = [_to(a, self.gpus[0]) for a in batch]
+        return batch
+    
     def prepare_model(self, model):
         model.trainer = self
         model.board.xlim = [0, self.max_epochs]
+        if self.gpus:
+            model.to(self.gpus[0])
         self.model = model
-
+        
     def fit(self, model, data):
         self.prepare_data(data)
         self.prepare_model(model)
@@ -34,13 +39,6 @@ class Trainer(HyperParameters):
         self.val_batch_idx = 0
         for self.epoch in range(self.max_epochs):
             self.fit_epoch()
-
-    def fit_epoch(self):
-        raise NotImplementedError
-
-    def prepare_batch(self, batch):
-        """Defined in :numref:`sec_linear_scratch`"""
-        return batch
 
     def fit_epoch(self):
         """Defined in :numref:`sec_linear_scratch`"""
@@ -61,25 +59,6 @@ class Trainer(HyperParameters):
             with torch.no_grad():
                 self.model.validation_step(self.prepare_batch(batch))
             self.val_batch_idx += 1
-
-    def __init__(self, max_epochs, num_gpus=0, gradient_clip_val=0):
-        """Defined in :numref:`sec_use_gpu`"""
-        self.save_hyperparameters()
-        self.gpus = [gpu(i) for i in range(min(num_gpus, _num_gpus()))]
-
-    def prepare_batch(self, batch):
-        """Defined in :numref:`sec_use_gpu`"""
-        if self.gpus:
-            batch = [_to(a, self.gpus[0]) for a in batch]
-        return batch
-
-    def prepare_model(self, model):
-        """Defined in :numref:`sec_use_gpu`"""
-        model.trainer = self
-        model.board.xlim = [0, self.max_epochs]
-        if self.gpus:
-            model.to(self.gpus[0])
-        self.model = model
 
     def clip_gradients(self, grad_clip_val, model):
         """Defined in :numref:`sec_rnn-scratch`"""

@@ -1,7 +1,6 @@
 import torch
 
 def cpu():
-    """Defined in :numref:`sec_use_gpu`"""
     return torch.device('cpu')
 
 def num_gpus():

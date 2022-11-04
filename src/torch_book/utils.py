@@ -1,6 +1,7 @@
 import inspect
 import torch
 from torch import nn
+from torch.utils.data import TensorDataset, DataLoader
 
 
 def add_to_class(Class):
@@ -21,9 +22,7 @@ class HyperParameters:
 
 
 class DataModule(HyperParameters):
-    """Defined in :numref:`sec_oo-design`"""
-
-    def __init__(self, root='../data', num_workers=4):
+    def __init__(self, root='/tmp/data', num_workers=4):
         self.save_hyperparameters()
 
     def get_dataloader(self, train):
@@ -36,11 +35,9 @@ class DataModule(HyperParameters):
         return self.get_dataloader(train=False)
 
     def get_tensorloader(self, tensors, train, indices=slice(0, None)):
-        """Defined in :numref:`sec_synthetic-regression-data`"""
         tensors = tuple(a[indices] for a in tensors)
-        dataset = torch.utils.data.TensorDataset(*tensors)
-        return torch.utils.data.DataLoader(dataset, self.batch_size,
-                                           shuffle=train)
+        dataset = TensorDataset(*tensors)
+        return DataLoader(dataset, self.batch_size, shuffle=train)
 
 
 def init_cnn(module):

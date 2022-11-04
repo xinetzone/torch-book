@@ -64,7 +64,7 @@ def load_array(data_arrays, batch_size, is_train=True):
     return data.DataLoader(dataset, batch_size, shuffle=is_train)
 
 
-_reshape = lambda x, *args, **kwargs: x.reshape(*args, **kwargs)
+# _reshape = lambda x, *args, **kwargs: x.reshape(*args, **kwargs)
 
 
 def download(url, folder='../data', sha1_hash=None):
