@@ -1,0 +1,71 @@
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.4,<4"]
+
+[project]
+authors = [{name = "xinetzone", email = "735613050@qq.com"}]
+dynamic = ["version", "description"]
+license = {file = "LICENSE"}
+name = "torch-book"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+  "d2py"
+]
+
+maintainers = [
+  {name = "xinetzone", email = "735613050@qq.com"},
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Framework :: Sphinx",
+  "Framework :: Sphinx :: Theme",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Home = "https://github.com/xinetzone/torch-book"
+
+[project.optional-dependencies]
+doc = [
+  "myst-nb",
+  "sphinx-book-theme",
+  "sphinxext-rediraffe",
+  "sphinx-copybutton",
+  "sphinxcontrib-mermaid",
+  "sphinx-design",
+  "sphinxcontrib-bibtex",
+  "sphinx-thebe",
+  "sphinx-comments",
+  "matplotlib",
+  "sphinx-automodapi",
+  "sphinx-plotly-directive",
+  "sphinx-sitemap"
+]
+
+coverage = [
+  "pytest-cov",
+  "pytest-regressions",
+  "codecov",
+  "torch_book[test]",
+]
+dev = [
+  "pyyaml",
+  "pre-commit",
+  "torch_book[coverage]",
+]
+test = [
+  "pytest",
+  "torch_book[doc]",
+]
+
+[tool.flit.module]
+name = "torch_book"
+
+[tool.flit.sdist]
+# include = ["docs/"]
+exclude = ['doc', '.git', '.github']
