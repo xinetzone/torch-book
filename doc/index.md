@@ -9,8 +9,6 @@ refs/index
 paper/index
 others/index
 design/index
-deploy/index
-chaos/index
 notion
 ```
 

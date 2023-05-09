@@ -54,7 +54,7 @@ extensions = [
     "sphinx_automodapi.automodapi",
     "sphinx_automodapi.smart_resolver",
     # "sphinx.ext.todo",
-    # "sphinxcontrib.bibtex",
+    "sphinxcontrib.bibtex",
     # "sphinx_togglebutton",
     # "sphinx.ext.viewcode",
     # "sphinx.ext.doctest",
@@ -102,8 +102,8 @@ intersphinx_mapping = {
     'python': ('https://daobook.github.io/cpython/', None),
     'sphinx': ('https://daobook.github.io/sphinx/', None),
     'peps': ('https://daobook.github.io/peps', None),
-    "pytorch": ("https://pytorch.org/docs/stable/index.html", None),
-    "torchvision": ("https://pytorch.org/vision/stable/index.html", None),
+    "pytorch": ("https://pytorch.org/docs/stable", None),
+    "torchvision": ("https://pytorch.org/vision/stable", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -281,3 +281,8 @@ nb_merge_streams = True
 nb_execution_allow_errors = True
 nb_execution_mode = "off" # "off"
 # nbsphinx_assume_equations = False
+
+bibtex_bibfiles = ["refs.bib"]
+# To test that style looks good with common bibtex config
+bibtex_reference_style = "author_year"
+graphviz_output_format = 'svg'

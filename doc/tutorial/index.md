@@ -4,6 +4,4 @@
 intro
 transfer-learning/index
 TorchScript/index
-quant/index
-attack/index
 ```
