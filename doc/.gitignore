@@ -1,3 +1,6 @@
 *.h5
 chaos/
 datasets/
+*.pt
+*.pkl
+*.params
