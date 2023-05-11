@@ -1,0 +1,29 @@
+[data] # 定义数据属性
+batch = 1
+c = 3
+h = 224
+w = 224
+dtype = "float32"
+name = "data"
+layout = "NCHW"
+
+[train]
+batch_size = 30 # 训练样本批量大小
+
+[test]
+batch_size = 50 # 测试样本批量大小
+
+[origin] # 定义数据根目录
+root = "/media/pc/data/lxw/home/data/datasets/ILSVRC" # ImageNet 数据根目录
+
+[output] # 定义日志以及结果文件的输出
+root = "cpp/tests/outputs" # 输出根目录
+
+[debug] # 提供预测样本
+src_name = "data/test/cat.png" # 输入源名称
+
+[remote] # 用于 C++ 部署的单张数据的输入
+src_name = "inputs.bin" # C++ 端测试数据名称
+
+[model] # 模型相关参数
+name = "resnet18"

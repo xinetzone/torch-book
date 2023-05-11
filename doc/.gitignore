@@ -4,3 +4,4 @@ datasets/
 *.pt
 *.pkl
 *.params
+*.pth
