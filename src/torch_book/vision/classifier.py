@@ -7,6 +7,7 @@ import numpy as np
 from torch import nn
 from torch.optim import SGD, lr_scheduler
 from torch import no_grad
+import torch
 from .utils import Accumulator
 from ..backend.gpu import try_gpu
 from ..plotx import Animator
@@ -24,12 +25,10 @@ def accuracy(y_hat, y):
     return float(reduce_sum(astype(cmp, y.dtype)))
 
 
-def evaluate_accuracy(net, data_iter, device=None):
+def evaluate_accuracy(net, data_iter, device=torch.device("cpu")):
     """使用GPU计算模型在数据集上的精度"""
     if isinstance(net, nn.Module):
         net.eval()  # 设置为评估模式
-        if not device:
-            device = next(iter(net.parameters())).device
     # 正确预测的数量，总预测的数量
     metric = Accumulator(2)
     with no_grad():
