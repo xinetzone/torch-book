@@ -4,10 +4,10 @@ import logging
 import time
 import numpy as np
 # from ..abcx.model import ModelABC
+import torch
 from torch import nn
 from torch.optim import SGD, lr_scheduler
 from torch import no_grad
-import torch
 from .utils import Accumulator
 from ..backend.gpu import try_gpu
 from ..plotx import Animator
@@ -25,8 +25,9 @@ def accuracy(y_hat, y):
     return float(reduce_sum(astype(cmp, y.dtype)))
 
 
-def evaluate_accuracy(net, data_iter, device=torch.device("cpu")):
+def evaluate_accuracy(net, data_iter, device):
     """使用GPU计算模型在数据集上的精度"""
+    net = net.to(device)
     if isinstance(net, nn.Module):
         net.eval()  # 设置为评估模式
     # 正确预测的数量，总预测的数量
@@ -77,10 +78,9 @@ class Classifier:
     mod: nn.Module
     train_iter: Any
     test_iter: Any
-    device_id: int = 0
+    device: torch.device
 
     def __post_init__(self):
-        self.device = try_gpu(self.device_id)
         logging.info(f'training on {self.device}')
         self.num_batches = len(self.train_iter)
         self.timer = Timer()
@@ -135,7 +135,8 @@ class Classifier:
                 if (i + 1) % (self.num_batches // 5) == 0 or i == self.num_batches - 1:
                     self.animator.add(epoch + (i + 1) / self.num_batches,
                                       (train_l, train_acc, None))
-            test_acc = evaluate_accuracy(self.mod, self.test_iter)
+            test_acc = evaluate_accuracy(self.mod, self.test_iter, device=self.device)
+            logging.info(f"device: {self.device} loss {train_l:.3f}, train acc {train_acc:.3f}, test acc {test_acc:.3f}")
             self.animator.add(epoch + 1, (None, None, test_acc))
             if hasattr(self, "scheduler"):
                 self.scheduler.step()
