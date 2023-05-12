@@ -136,7 +136,7 @@ class Classifier:
                     self.animator.add(epoch + (i + 1) / self.num_batches,
                                       (train_l, train_acc, None))
             test_acc = evaluate_accuracy(self.mod, self.test_iter, device=self.device)
-            logging.info(f"device: {self.device} loss {train_l:.3f}, train acc {train_acc:.3f}, test acc {test_acc:.3f}")
+            logging.info(f"epoch {epoch}: device {self.device}, loss {train_l:.3f}, train acc {train_acc:.3f}, test acc {test_acc:.3f}")
             self.animator.add(epoch + 1, (None, None, test_acc))
             if hasattr(self, "scheduler"):
                 self.scheduler.step()
