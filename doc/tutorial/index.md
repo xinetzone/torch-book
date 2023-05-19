@@ -5,4 +5,5 @@ intro
 transfer-learning/index
 TorchScript/index
 quant/index
+fx/index
 ```

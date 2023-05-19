@@ -1,50 +1,16 @@
 from dataclasses import dataclass
-import numpy as np
-import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
+from ..transforms.cutout import Cutout
 
-@dataclass
-class Cutout:
-    """随机遮挡图片的若干尺寸的若干块，尺寸和块可以根据自己的需要设置。
-
-    参考：https://github.com/uoguelph-mlrg/Cutout
-    Args:
-
-        n_holes (int): Number of patches to cut out of each image.
-        length (int): The length (in pixels) of each square patch.
-    """
-    n_holes: int
-    length: int
-
-    def __call__(self, img):
-        h = img.size(1)
-        w = img.size(2)
-
-        mask = np.ones((h, w), np.float32)
-
-        for n in range(self.n_holes):
-        	# (x,y)表示方形补丁的中心位置
-            y = np.random.randint(h)
-            x = np.random.randint(w)
-            y1 = np.clip(y - self.length // 2, 0, h)
-            y2 = np.clip(y + self.length // 2, 0, h)
-            x1 = np.clip(x - self.length // 2, 0, w)
-            x2 = np.clip(x + self.length // 2, 0, w)
-
-            mask[y1: y2, x1: x2] = 0.
-
-        mask = torch.from_numpy(mask)
-        mask = mask.expand_as(img)
-        img = img * mask
-        return img
 
 @dataclass
 class Cifar10:
     """Download the Cifar10 dataset and then load it into memory."""
     root: str = "../data"
     batch_size: int = 64
-    num_workers: int = 4
+    num_workers: int = 1
+    cutout: Cutout|None = None # 数据做 Cutout 增强
 
     def __post_init__(self):
         # self.mean = [0.4914, 0.4822, 0.4465]
@@ -61,17 +27,18 @@ class Cifar10:
                   transforms.Normalize(self.mean, self.std)]
 
         self.test_form = transforms.Compose(_trans)
-        self.train_form = transforms.Compose([
-            transforms.RandomCrop(36, padding=4),  #先四周填充0，在吧图像随机裁剪成36*36
+        _train_form = [
+            transforms.RandomCrop(36, padding=4),  # 先四周填充0，在吧图像随机裁剪成36*36
             # 随机裁剪出一个高度和宽度均为 upsample 像素的正方形图像，
             # 生成一个面积为原始图像面积 0.64 到 1 倍的小正方形，
             # 然后将其缩放为高度和宽度均为 32 像素的正方形
             transforms.RandomResizedCrop(32,
                                          scale=(0.64, 1.0),
                                          ratio=(1.0, 1.0)),
-            transforms.RandomHorizontalFlip(),
-            #  *_trans])
-            *_trans, Cutout(n_holes=1, length=16)])
+            transforms.RandomHorizontalFlip(), *_trans]
+        if self.cutout is not None:
+            _train_form += [self.cutout]
+        self.train_form = transforms.Compose(_train_form)
 
     def train(self):
         return datasets.CIFAR10(root=self.root, train=True,
