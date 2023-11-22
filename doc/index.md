@@ -1,0 +1,20 @@
+```{include} ../README.md 
+```
+
+```{toctree}
+:maxdepth: 2
+
+tutorial/index
+recipes/index
+refs/index
+paper/index
+others/index
+design/index
+notion
+```
+
+## 目录和索引
+
+* {ref}`genindex`
+* {ref}`modindex`
+* {ref}`search`
