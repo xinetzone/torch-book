@@ -5,4 +5,5 @@
 
 cifar10-resnet18-relu
 cifar10-resnet18-silu
+cifar10-resnet18-silu-linear
 ```
