@@ -4,4 +4,5 @@
 cifar/index
 benchmark
 activation/index
+vision/index
 ```
