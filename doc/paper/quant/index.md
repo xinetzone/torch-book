@@ -3,5 +3,6 @@
 ```{toctree}
 :maxdepth: 2
 
+A-White-Paper-on-NeuralNetworkQuantization
 SR
 ```

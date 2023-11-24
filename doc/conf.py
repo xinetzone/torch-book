@@ -287,3 +287,5 @@ bibtex_bibfiles = ["refs.bib"]
 # To test that style looks good with common bibtex config
 bibtex_reference_style = "author_year"
 graphviz_output_format = 'svg'
+
+numfig = True
