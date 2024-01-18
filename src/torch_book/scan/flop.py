@@ -181,6 +181,5 @@ def get_FLOPs(gm, sample_input, ignore_ops=[]):
         else:
             raise KeyError("'flops' must be in node.meta")
 
-        
         result_table.append(_result_row)
     return result_table
