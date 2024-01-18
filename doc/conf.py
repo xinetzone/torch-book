@@ -53,7 +53,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx_automodapi.automodapi",
     "sphinx_automodapi.smart_resolver",
-    # "sphinx.ext.todo",
+    "sphinx.ext.todo",
     "sphinxcontrib.bibtex",
     # "sphinx_togglebutton",
     # "sphinx.ext.viewcode",
@@ -274,8 +274,6 @@ html_favicon = "page-logo.jfif"
 # -- 自定义网站的标题 --------------
 # html_title = '动手学习 Python'
 
-# todo_include_todos = True
-
 # 如果你希望stderr和stdout中的每个输出都被合并成一个流，请使用以下配置。
 # 避免将 jupter 执行报错的信息输出到 cmd
 nb_merge_streams = True
@@ -289,3 +287,5 @@ bibtex_reference_style = "author_year"
 graphviz_output_format = 'svg'
 
 numfig = True
+todo_include_todos = True
+navigation_with_keys = True
