@@ -9,7 +9,7 @@ def flops_zero() -> int:
 
 
 def flops_elemwise(result_shape: Size) -> int:
-    return np.prod(result.shape)
+    return result_shape.numel()
 
 
 def flops_matmul(tensor1_shape: Size, tensor2_shape: Size, result_shape: Size) -> int:
