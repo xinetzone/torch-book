@@ -54,7 +54,7 @@ extensions = [
     "sphinx_automodapi.automodapi",
     "sphinx_automodapi.smart_resolver",
     "sphinx.ext.todo",
-    "sphinxcontrib.bibtex",
+    # "sphinxcontrib.bibtex",
     # "sphinx_togglebutton",
     # "sphinx.ext.viewcode",
     # "sphinx.ext.doctest",
