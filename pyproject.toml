@@ -34,13 +34,13 @@ Home = "https://github.com/xinetzone/torch-book"
 [project.optional-dependencies]
 doc = [
   "myst-nb",
-  "sphinx==7.2.6",
+  "sphinx",
   "sphinx-book-theme",
   "sphinxext-rediraffe",
   "sphinx-copybutton",
   "sphinxcontrib-mermaid",
   "sphinx-design",
-  "sphinxcontrib-bibtex",
+  # "sphinxcontrib-bibtex",
   "sphinx-thebe",
   "sphinx-comments",
   "matplotlib",
