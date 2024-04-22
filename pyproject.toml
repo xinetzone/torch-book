@@ -11,7 +11,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 
 dependencies = [
-  "d2py"
+  "d2py[dev]"
 ]
 
 maintainers = [
@@ -54,7 +54,7 @@ coverage = [
   "torch_book[test]",
 ]
 dev = [
-  "pyyaml",
+  "invoke",
   "pre-commit",
   "torch_book[coverage]",
 ]
