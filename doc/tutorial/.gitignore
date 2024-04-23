@@ -2,3 +2,4 @@ data/
 params/
 attack/
 *.pt
+*.sarif
