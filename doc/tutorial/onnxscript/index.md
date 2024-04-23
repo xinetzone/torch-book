@@ -4,4 +4,8 @@
 
 ```{toctree}
 intro
+tutorial
+gelu
+chunk
+registry
 ```
