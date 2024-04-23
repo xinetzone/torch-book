@@ -5,4 +5,5 @@ dynamo-export
 export
 register-custom_op-symbolic
 register-linalg_inv
+faqs/index
 ```
