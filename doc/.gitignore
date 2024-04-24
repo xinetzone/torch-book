@@ -6,3 +6,4 @@ datasets/
 *.pth
 *.onnx
 data/
+*.onnxlib

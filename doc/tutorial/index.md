@@ -7,7 +7,6 @@ TorchScript/index
 quant/index
 fx/index
 intermediate/index
-onnxscript/index
 onnx-op/index
 compile/index
 ultralytics/index
