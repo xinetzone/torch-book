@@ -43,7 +43,7 @@ doc = [
   "sphinx-copybutton",
   "sphinxcontrib-mermaid",
   "sphinx-design",
-  # "sphinxcontrib-bibtex",
+  "sphinxcontrib-bibtex",
   "sphinx-thebe",
   "sphinx-comments",
   "matplotlib",
