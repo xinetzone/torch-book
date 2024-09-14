@@ -3,3 +3,4 @@ params/
 attack/
 *.pt
 *.sarif
+.temp/
