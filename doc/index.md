@@ -5,15 +5,11 @@
 ```
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 7
 
-tutorial/index
-recipes/index
-refs/index
-paper/index
-others/index
-design/index
 notion
+refs/index
+old/index
 ```
 
 ## 目录和索引
