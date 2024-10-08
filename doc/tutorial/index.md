@@ -14,5 +14,6 @@ Detectron2/index
 torchmetrics/index
 ddp/index
 executorch/index
+torchao/index
 chaos/index
 ```
