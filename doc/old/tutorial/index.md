@@ -9,7 +9,6 @@ fx/index
 intermediate/index
 onnx-op/index
 compile/index
-ultralytics/index
 Detectron2/index
 torchmetrics/index
 ddp/index

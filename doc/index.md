@@ -7,6 +7,7 @@
 ```{toctree}
 :maxdepth: 7
 
+ultralytics/index
 notion
 refs/index
 old/index

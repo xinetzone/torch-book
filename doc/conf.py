@@ -108,6 +108,7 @@ intersphinx_mapping = {
     'peps': ('https://daobook.github.io/peps', None),
     "pytorch": ("https://pytorch.org/docs/stable", None),
     "torchvision": ("https://pytorch.org/vision/stable", None),
+    "ultralytics": ("https://docs.ultralytics.com/zh", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
