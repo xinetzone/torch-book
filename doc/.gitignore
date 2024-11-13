@@ -7,3 +7,7 @@ datasets/
 *.onnx
 data/
 *.onnxlib
+*.npy
+*.npz
+*.torchscript
+*.engine
