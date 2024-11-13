@@ -3,4 +3,7 @@
 ```{toctree}
 intro
 modes/index
+tasks/index
+solutions/index
+guides/index
 ```
