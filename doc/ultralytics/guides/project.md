@@ -9,5 +9,4 @@ model-training-tips
 model-evaluation-insights
 model-testing
 model-monitoring-and-maintenance
-analytics
 ```
