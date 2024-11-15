@@ -1,9 +1,3 @@
----
-comments: true
-description: Learn how to visualize YOLO inference results directly in a VSCode terminal using sixel on Linux and MacOS.
-keywords: YOLO, inference results, VSCode terminal, sixel, display images, Linux, MacOS
----
-
 # Viewing Inference Results in a Terminal
 
 <p align="center">
@@ -43,7 +37,7 @@ The VSCode compatible protocols for viewing images using the integrated terminal
 
 3. Load a model and execute inference, then plot the results and store in a variable. See more about inference arguments and working with results on the [predict mode](../modes/predict.md) page.
 
-    ```{ .py .annotate }
+    ```python
     from ultralytics import YOLO
 
     # Load a model
@@ -60,7 +54,7 @@ The VSCode compatible protocols for viewing images using the integrated terminal
 
 4. Now, use [OpenCV](https://www.ultralytics.com/glossary/opencv) to convert the `numpy.ndarray` to `bytes` data. Then use `io.BytesIO` to make a "file-like" object.
 
-    ```{ .py .annotate }
+    ```python
     import io
 
     import cv2
@@ -102,7 +96,7 @@ The VSCode compatible protocols for viewing images using the integrated terminal
 
 ## Full Code Example
 
-```{ .py .annotate }
+```python
 import io
 
 import cv2

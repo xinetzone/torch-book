@@ -25,9 +25,9 @@ The Security Alarm System Project utilizing Ultralytics YOLO11 integrates advanc
   <strong>Watch:</strong> Security Alarm System Project with Ultralytics YOLO11 <a href="https://www.ultralytics.com/glossary/object-detection">Object Detection</a>
 </p>
 
-### Code
+## Code
 
-#### Set up the parameters of the message
+### Set up the parameters of the message
 
 ???+ note
 
@@ -41,7 +41,7 @@ from_email = ""  # must match the email used to generate the password
 to_email = ""  # receiver email
 ```
 
-#### Server creation and authentication
+### Server creation and authentication
 
 ```python
 import smtplib
@@ -51,7 +51,7 @@ server.starttls()
 server.login(from_email, password)
 ```
 
-#### Email Send Function
+### Email Send Function
 
 ```python
 from email.mime.multipart import MIMEMultipart
@@ -71,7 +71,7 @@ def send_email(to_email, from_email, object_detected=1):
     server.sendmail(from_email, to_email, message.as_string())
 ```
 
-#### Object Detection and Alert Sender
+### Object Detection and Alert Sender
 
 ```python
 from time import time
@@ -164,7 +164,7 @@ class ObjectDetection:
         server.quit()
 ```
 
-#### Call the Object Detection class and Run the Inference
+### Call the Object Detection class and Run the Inference
 
 ```python
 detector = ObjectDetection(capture_index=0)
@@ -173,7 +173,7 @@ detector()
 
 That's it! When you execute the code, you'll receive a single notification on your email if any object is detected. The notification is sent immediately, not repeatedly. However, feel free to customize the code to suit your project requirements.
 
-#### Email Received Sample
+### Email Received Sample
 
 <img width="256" src="https://github.com/ultralytics/docs/releases/download/0/email-received-sample.avif" alt="Email Received Sample">
 

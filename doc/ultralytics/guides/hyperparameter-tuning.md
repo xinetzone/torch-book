@@ -91,7 +91,7 @@ After you've successfully completed the hyperparameter tuning process, you will 
 
 Here's what the directory structure of the results will look like. Training directories like `train1/` contain individual tuning iterations, i.e. one model trained with one set of hyperparameters. The `tune/` directory contains tuning results from all the individual model trainings:
 
-```plaintext
+```
 runs/
 └── detect/
     ├── train1/
@@ -167,7 +167,7 @@ A CSV file containing detailed results of each iteration during the tuning. Each
 - **Format**: CSV
 - **Usage**: Per-iteration results tracking.
 - **Example**:
-    ```csv
+    ```
       fitness,lr0,lrf,momentum,weight_decay,warmup_epochs,warmup_momentum,box,cls,dfl,hsv_h,hsv_s,hsv_v,degrees,translate,scale,shear,perspective,flipud,fliplr,mosaic,mixup,copy_paste
       0.05021,0.01,0.01,0.937,0.0005,3.0,0.8,7.5,0.5,1.5,0.015,0.7,0.4,0.0,0.1,0.5,0.0,0.0,0.0,0.5,1.0,0.0,0.0
       0.07217,0.01003,0.00967,0.93897,0.00049,2.79757,0.81075,7.5,0.50746,1.44826,0.01503,0.72948,0.40658,0.0,0.0987,0.4922,0.0,0.0,0.0,0.49729,1.0,0.0,0.0

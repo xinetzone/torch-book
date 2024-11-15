@@ -5,7 +5,7 @@
 ```
 
 ```{toctree}
-:maxdepth: 7
+:maxdepth: 10
 
 ultralytics/index
 notion

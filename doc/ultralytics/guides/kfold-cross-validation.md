@@ -108,7 +108,7 @@ Without further ado, let's dive in!
 
 6. The following is a sample view of the populated DataFrame:
 
-    ```pandas
+    ```
                                                            0    1    2    3    4    5
     '0000a16e4b057580_jpg.rf.00ab48988370f64f5ca8ea4...'  0.0  0.0  0.0  0.0  0.0  7.0
     '0000a16e4b057580_jpg.rf.7e6dce029fb67f01eb19aa7...'  0.0  0.0  0.0  0.0  0.0  7.0

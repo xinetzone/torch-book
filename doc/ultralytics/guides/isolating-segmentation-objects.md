@@ -47,7 +47,7 @@ After performing the [Segment Task](../tasks/segment.md), it's sometimes desirab
 
 3.  Now iterate over the results and the contours. For workflows that want to save an image to file, the source image `base-name` and the detection `class-label` are retrieved for later use (optional).
 
-    ```{ .py .annotate }
+    ```python
     from pathlib import Path
 
     import numpy as np
@@ -76,7 +76,7 @@ After performing the [Segment Task](../tasks/segment.md), it's sometimes desirab
 
     ![Binary Mask Image](https://github.com/ultralytics/ultralytics/assets/62214284/59bce684-fdda-4b17-8104-0b4b51149aca){ width="240", align="right" }
 
-    ```{ .py .annotate }
+    ```python
     import cv2
 
     # Create binary mask
@@ -171,7 +171,7 @@ After performing the [Segment Task](../tasks/segment.md), it's sometimes desirab
                 Additional steps required to crop image to only include object region.
 
                 ![Example Crop Isolated Object Image Black Background](https://github.com/ultralytics/docs/releases/download/0/example-crop-isolated-object-image-black-background.avif){ align="right" }
-                ```{ .py .annotate }
+                ```python
                 # (1) Bounding box coordinates
                 x1, y1, x2, y2 = c.boxes.xyxy.cpu().numpy().squeeze().astype(np.int32)
                 # Crop image to object region
@@ -217,7 +217,7 @@ After performing the [Segment Task](../tasks/segment.md), it's sometimes desirab
                 Additional steps required to crop image to only include object region.
 
                 ![Example Crop Isolated Object Image No Background](https://github.com/ultralytics/docs/releases/download/0/example-crop-isolated-object-image-no-background.avif){ align="right" }
-                ```{ .py .annotate }
+                ```python
                 # (1) Bounding box coordinates
                 x1, y1, x2, y2 = c.boxes.xyxy.cpu().numpy().squeeze().astype(np.int32)
                 # Crop image to object region
@@ -259,7 +259,7 @@ After performing the [Segment Task](../tasks/segment.md), it's sometimes desirab
 
 Here, all steps from the previous section are combined into a single block of code. For repeated use, it would be optimal to define a function to do some or all commands contained in the `for`-loops, but that is an exercise left to the reader.
 
-```{ .py .annotate }
+```python
 from pathlib import Path
 
 import cv2
