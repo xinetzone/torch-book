@@ -15,8 +15,7 @@ sahi-tiled-inference
 azureml-quickstart
 conda-quickstart
 docker-quickstart
-raspberry-pi
-nvidia-jetson
+edge
 deepstream-nvidia-jetson
 triton-inference-server
 yolo-thread-safe-inference

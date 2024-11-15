@@ -1,7 +1,8 @@
 # 性能指标深度剖析
 
-性能指标是评估 [目标检测](https://www.ultralytics.com/glossary/object-detection) 模型[accuracy](https://www.ultralytics.com/glossary/accuracy)和效率的关键工具。它们揭示了模型在图像中识别和定位对象的有效性。此外，这些指标还有助于理解模型如何处理误报和漏报情况。这些见解对于评估和提升模型性能至关重要。在本指南中，我们将探讨与YOLOv11相关的各种性能指标、它们的重要性以及如何解释这些指标。
+性能指标是评估 [目标检测](https://www.ultralytics.com/glossary/object-detection) 模型 [accuracy](https://www.ultralytics.com/glossary/accuracy) 和效率的关键工具。它们揭示了模型在图像中识别和定位对象的有效性。此外，这些指标还有助于理解模型如何处理误报和漏报情况。这些见解对于评估和提升模型性能至关重要。在本指南中，我们将探讨与YOLOv11相关的各种性能指标、它们的重要性以及如何解释这些指标。
 
+(object-detection-metrics)=
 ## 目标检测指标
 
 首先讨论一些不仅对 YOLOv11 至关重要，而且广泛适用于不同目标检测模型的指标。
@@ -10,184 +11,177 @@
 
 - **平均精度（Average Precision, AP）**：AP 计算的是精确度-召回率曲线下的面积，提供了一个单一值来概括模型的精确度和召回性能。
 
-- **平均精度均值（Mean Average Precision, mAP）**：mAP通过计算多个对象类别的平均AP值来扩展AP的概念。这在多类对象检测场景中非常有用，可以提供模型性能的全面评估。
+- **平均精度均值（Mean Average Precision, mAP）**：mAP 通过计算多个对象类别的平均 AP 值来扩展 AP 的概念。这在多类对象检测场景中非常有用，可以提供模型性能的全面评估。
 
-- **精确度和召回率**：精确度量化了所有正面预测中真正阳性的比例，评估了模型避免假阳性的能力。另一方面，召回率计算了所有实际阳性中真正阳性的比例，衡量了模型检测一个类别所有实例的能力。
+- **精确度和召回率**：精确度量化了所有正面预测中真正阳性的比例，评估了模型避免假阳性的能力。另一方面，召回率计算了所有实际阳性中真正阳性的比例，衡量了模型检测类别所有实例的能力。
 
-- **F1分数**：F1分数是精确度和召回率的调和平均值，提供了一个平衡的模型性能评估，同时考虑了假阳性和假阴性。
+- **F1分数**：F1 分数是精确度和召回率的调和平均值，提供了平衡的模型性能评估，同时考虑了假阳性和假阴性。
 
-## How to Calculate Metrics for YOLO11 Model
+## 计算 YOLOv11 模型指标的方法
 
-Now, we can explore [YOLO11's Validation mode](../modes/val) that can be used to compute the above discussed evaluation metrics.
+现在，可以探讨[YOLOv1的验证模式](../modes/val)，该模式可以用来计算上述讨论的评估指标。
 
-Using the validation mode is simple. Once you have a trained model, you can invoke the model.val() function. This function will then process the validation dataset and return a variety of performance metrics. But what do these metrics mean? And how should you interpret them?
+使用验证模式很简单。一旦你有训练好的模型，你就可以调用 {func}`model.val` 函数。这个函数会处理验证数据集并返回各种性能指标。但这些指标意味着什么？你应该如何解释它们呢？
 
-### Interpreting the Output
+### 解析输出结果
 
-Let's break down the output of the model.val() function and understand each segment of the output.
+让我们仔细分析模型的 {func}`val` 函数输出，并理解输出的每个部分。
 
-#### Class-wise Metrics
+#### 分类指标
 
-One of the sections of the output is the class-wise breakdown of performance metrics. This granular information is useful when you are trying to understand how well the model is doing for each specific class, especially in datasets with a diverse range of object categories. For each class in the dataset the following is provided:
+输出的一部分是按类别划分的性能指标。这种细粒度的信息在你试图了解模型在每个特定类别上的表现时非常有用，尤其是在包含多种对象类别的数据集上。对于数据集中的每个类别，提供了以下信息：
 
-- **Class**: This denotes the name of the object class, such as "person", "car", or "dog".
+- **类别**: 这表示对象类别的名称，例如“人”、“汽车”或“狗”。
 
-- **Images**: This metric tells you the number of images in the validation set that contain the object class.
+- **图像**: 这个指标告诉你验证集中包含该对象类别的图像数量。
 
-- **Instances**: This provides the count of how many times the class appears across all images in the validation set.
+- **实例**: 这提供了该类在所有验证集图像中出现的次数。
 
-- **Box(P, R, mAP50, mAP50-95)**: This metric provides insights into the model's performance in detecting objects:
+- **框(P, R, mAP50, mAP50-95)**: 这个指标提供了模型检测对象的性能见解：
 
-    - **P (Precision)**: The accuracy of the detected objects, indicating how many detections were correct.
+    - **P（精度）**: 检测到的对象的准确性，指示有多少检测是正确的。
 
-    - **R (Recall)**: The ability of the model to identify all instances of objects in the images.
+    - **R（召回率）**: 模型识别所有图像中对象实例的能力。
 
-    - **mAP50**: Mean average precision calculated at an intersection over union (IoU) threshold of 0.50. It's a measure of the model's accuracy considering only the "easy" detections.
+    - **mAP50**: 在交并比（IoU）阈值为0.50时计算的平均精度均值。它衡量了模型仅考虑“容易”检测的准确度。
 
-    - **mAP50-95**: The average of the mean average precision calculated at varying IoU thresholds, ranging from 0.50 to 0.95. It gives a comprehensive view of the model's performance across different levels of detection difficulty.
+    - **mAP50-95**: 在不同IoU阈值下计算的平均精度均值的平均值，范围从0.50到0.95。它提供了模型在不同检测难度级别上的综合表现视图。
 
-#### Speed Metrics
+#### 速度指标
 
-The speed of inference can be as critical as accuracy, especially in real-time object detection scenarios. This section breaks down the time taken for various stages of the validation process, from preprocessing to post-processing.
+在实时对象检测场景中，推断的速度可以和准确性一样关键。这一部分分解了验证过程的各个阶段（从预处理到后处理）所花费的时间。
 
-#### COCO Metrics Evaluation
+#### COCO指标评估
 
-For users validating on the COCO dataset, additional metrics are calculated using the COCO evaluation script. These metrics give insights into precision and recall at different IoU thresholds and for objects of different sizes.
+对于在COCO数据集上进行验证的用户，使用COCO评估脚本计算额外的指标。这些指标提供了不同 IoU 阈值下以及不同大小对象的精确度和召回率的见解。
 
-#### Visual Outputs
+#### 可视化输出
 
-The model.val() function, apart from producing numeric metrics, also yields visual outputs that can provide a more intuitive understanding of the model's performance. Here's a breakdown of the visual outputs you can expect:
+模型的 {func}`.val` 函数除了产生数值指标外，还提供可视化输出，这些输出可以更直观地理解模型的性能。以下是你可以期待的视觉输出：
 
-- **F1 Score Curve (`F1_curve.png`)**: This curve represents the [F1 score](https://www.ultralytics.com/glossary/f1-score) across various thresholds. Interpreting this curve can offer insights into the model's balance between false positives and false negatives over different thresholds.
+- **F1 分数曲线（`F1_curve.png`）**: 这条曲线代表了在不同阈值下的[F1分数](https://www.ultralytics.com/glossary/f1-score)。解读这条曲线可以提供对模型在不同阈值下假阳性和假阴性平衡的见解。
+- **精确率-召回率曲线（`PR_curve.png`）**: 对于任何分类问题，这是一个基本的可视化工具，展示了在不同阈值下精确率和[召回率](https://www.ultralytics.com/glossary/recall)之间的权衡。在处理不平衡类别时尤其重要。
+- **精确率曲线（`P_curve.png`）**: 这是一个在不同阈值下的精确率值的图形表示。这条曲线帮助理解随着阈值变化精确率如何变化。
+- **召回率曲线（`R_curve.png`）**: 相应地，这个图表展示了不同阈值下的召回率值变化。
+- **混淆矩阵（https://www.ultralytics.com/glossary/confusion-matrix）（`confusion_matrix.png`）**: 混淆矩阵提供了详细的视角，展示了每个类别的真实阳性、真实阴性、假阳性和假阴性的数量。
+- **标准化混淆矩阵（`confusion_matrix_normalized.png`）**: 这个可视化是混淆矩阵的标准化版本。它以比例而非原始计数来表示数据。这种格式使得跨类别比较性能更加简单。
+- **验证批次标签（`val_batchX_labels.jpg`）**: 这些图像展示了验证数据集不同批次的地面实况标签。它们清晰地显示了根据数据集的对象及其各自位置。
+- **验证批次预测（`val_batchX_pred.jpg`）**: 与标签图像形成对比，这些视觉效果展示了YOLOv11模型对相应批次的预测。通过将这些与标签图像进行比较，你可以轻松评估模型在视觉上检测和分类对象的效果。
 
-- **Precision-Recall Curve (`PR_curve.png`)**: An integral visualization for any classification problem, this curve showcases the trade-offs between precision and [recall](https://www.ultralytics.com/glossary/recall) at varied thresholds. It becomes especially significant when dealing with imbalanced classes.
+#### 结果存储
 
-- **Precision Curve (`P_curve.png`)**: A graphical representation of precision values at different thresholds. This curve helps in understanding how precision varies as the threshold changes.
+为便于将来参考，这些结果被保存到一个目录中，通常命名为 `runs/detect/val`。
 
-- **Recall Curve (`R_curve.png`)**: Correspondingly, this graph illustrates how the recall values change across different thresholds.
+## 选择正确的评估指标
 
-- **[Confusion Matrix](https://www.ultralytics.com/glossary/confusion-matrix) (`confusion_matrix.png`)**: The confusion matrix provides a detailed view of the outcomes, showcasing the counts of true positives, true negatives, false positives, and false negatives for each class.
+选择合适的评估指标通常取决于具体的应用场景。
 
-- **Normalized Confusion Matrix (`confusion_matrix_normalized.png`)**: This visualization is a normalized version of the confusion matrix. It represents the data in proportions rather than raw counts. This format makes it simpler to compare the performance across classes.
+- **mAP（平均精度均值）** ：适用于对模型性能进行全面评估。
 
-- **Validation Batch Labels (`val_batchX_labels.jpg`)**: These images depict the ground truth labels for distinct batches from the validation dataset. They provide a clear picture of what the objects are and their respective locations as per the dataset.
+- **IoU（交并比）**： 在需要精确定位对象位置时至关重要。
 
-- **Validation Batch Predictions (`val_batchX_pred.jpg`)**: Contrasting the label images, these visuals display the predictions made by the YOLO11 model for the respective batches. By comparing these to the label images, you can easily assess how well the model detects and classifies objects visually.
+- **Precision（精确率）**： 当减少误检测是首要任务时非常重要。
 
-#### Results Storage
+- **Recall（召回率）**：当检测出每一个实例都很重要时，这一点非常关键。
 
-For future reference, the results are saved to a directory, typically named runs/detect/val.
+- **F1 Score（F1分数）**：当需要在精确率和召回率之间取得平衡时非常有用。
 
-## Choosing the Right Metrics
+对于实时应用，速度指标如 FPS（每秒帧数）和延迟是确保及时结果的关键。
 
-Choosing the right metrics to evaluate often depends on the specific application.
+### 结果解读
 
-- **mAP:** Suitable for a broad assessment of model performance.
+理解各项指标非常重要。以下是一些常见低分值可能暗示的问题：
 
-- **IoU:** Essential when precise object location is crucial.
+- **mAP（平均精度均值）较低**：表明模型可能需要整体优化。
 
-- **Precision:** Important when minimizing false detections is a priority.
+- **IoU（交并比）较低**：模型可能在准确定位物体方面存在困难。尝试不同的边界框方法可能会有所帮助。
 
-- **Recall:** Vital when it's important to detect every instance of an object.
+- **精确率较低**：模型可能检测到了太多不存在的物体。调整置信度阈值可能会减少这种情况。
 
-- **F1 Score:** Useful when a balance between precision and recall is needed.
+- **召回率较低**：模型可能遗漏了真实存在的物体。改进特征提取或使用更多数据可能会有帮助。
 
-For real-time applications, speed metrics like FPS (Frames Per Second) and latency are crucial to ensure timely results.
+- **F1分数不平衡**：在精确率和召回率之间存在差异。
 
-## Interpretation of Results
+- **类别特定的 AP（平均精度）**：低分值可以突出模型难以处理的类别。
 
-It's important to understand the metrics. Here's what some of the commonly observed lower scores might suggest:
+### 案例研究
 
-- **Low mAP:** Indicates the model may need general refinements.
+实际案例可以帮助阐明这些指标在实践中是如何工作的。
 
-- **Low IoU:** The model might be struggling to pinpoint objects accurately. Different bounding box methods could help.
+#### 案例1
 
-- **Low Precision:** The model may be detecting too many non-existent objects. Adjusting confidence thresholds might reduce this.
+- **情况**：mAP 和 F1 分数不理想，但召回率良好，精确度不高。
 
-- **Low Recall:** The model could be missing real objects. Improving [feature extraction](https://www.ultralytics.com/glossary/feature-extraction) or using more data might help.
+- **解释与行动**：可能存在太多错误的检测。收紧置信度阈值可以减少这些错误，尽管这也可能稍微降低召回率。
 
-- **Imbalanced F1 Score:** There's a disparity between precision and recall.
+#### 案例2
 
-- **Class-specific AP:** Low scores here can highlight classes the model struggles with.
+- **情况**：mAP 和召回率可以接受，但 IoU 不足。
 
-## Case Studies
+- **解释与行动**：模型能够很好地检测对象，但可能没有精确定位它们。优化边界框预测可能会有帮助。
 
-Real-world examples can help clarify how these metrics work in practice.
+#### 案例3
 
-### Case 1
+- **情况**：即使整体 mAP 尚可，某些类别的 AP 远低于其他类别。
 
-- **Situation:** mAP and F1 Score are suboptimal, but while Recall is good, Precision isn't.
+- **解释与行动**：这些类别对模型来说可能更具挑战性。增加这些类别的数据或在训练过程中调整类别权重可能会有益。
 
-- **Interpretation & Action:** There might be too many incorrect detections. Tightening confidence thresholds could reduce these, though it might also slightly decrease recall.
+### 连接与合作
 
-### Case 2
+加入由爱好者和专家组成的社区，可以极大地提升您使用 YOLO11 的旅程。以下是一些可以帮助您学习、解决问题和建立网络联系的途径。
 
-- **Situation:** mAP and Recall are acceptable, but IoU is lacking.
+#### 与更广泛的社区互动
 
-- **Interpretation & Action:** The model detects objects well but might not be localizing them precisely. Refining bounding box predictions might help.
+- **GitHub问题区** ：YOLO11 在 GitHub 上的仓库设有问题区标签（Issues tab），您可以在这里提问、报告错误以及建议新功能。社区和维护者在这里非常活跃，是解决特定问题的绝佳场所。
 
-### Case 3
+- **Ultralytics Discord服务器** ：Ultralytics 有 Discord 服务器，您可以在这里与其他用户和开发人员互动。
 
-- **Situation:** Some classes have a much lower AP than others, even with a decent overall mAP.
+#### 官方文档与资源
 
-- **Interpretation & Action:** These classes might be more challenging for the model. Using more data for these classes or adjusting class weights during training could be beneficial.
+- **Ultralytics YOLO11文档**：官方文档提供了对 YOLO11 的全面概述，包括安装、使用和故障排除指南。
 
-## Connect and Collaborate
+利用这些资源不仅可以帮助您解决任何挑战，还可以让您随时了解 YOLO11 社区的最新趋势和最佳实践。
 
-Tapping into a community of enthusiasts and experts can amplify your journey with YOLO11. Here are some avenues that can facilitate learning, troubleshooting, and networking.
+## 结论
 
-### Engage with the Broader Community
+在本指南中，我们详细探讨了 YOLO11 的关键性能指标。这些指标对于理解模型的表现至关重要，对任何希望微调其模型的人来说都是不可或缺的。它们提供了必要的见解，以改进并确保模型在实际情境中有效工作。
 
-- **GitHub Issues:** The YOLO11 repository on GitHub has an [Issues tab](https://github.com/ultralytics/ultralytics/issues) where you can ask questions, report bugs, and suggest new features. The community and maintainers are active here, and it's a great place to get help with specific problems.
+请记住，YOLO11 和 Ultralytics 社区是无价的资产。与其他开发者和专家互动可以开启在标准文档中找不到的见解和解决方案之门。在您的物体检测旅程中，保持学习的精神，尝试新策略，并分享您的发现。通过这样做，您为社区的集体智慧做出了贡献，并确保了它的成长。
 
-- **Ultralytics Discord Server:** Ultralytics has a [Discord server](https://discord.com/invite/ultralytics) where you can interact with other users and the developers.
+祝您物体检测愉快！
 
-### Official Documentation and Resources:
+## 常见问题
 
-- **Ultralytics YOLO11 Docs:** The [official documentation](../index.md) provides a comprehensive overview of YOLO11, along with guides on installation, usage, and troubleshooting.
+### 在评估 YOLOv11 模型性能时，[平均精度均值](https://www.ultralytics.com/glossary/mean-average-precision-map) (mAP) 有何重要性？
 
-Using these resources will not only guide you through any challenges but also keep you updated with the latest trends and best practices in the YOLO11 community.
+平均精度均值（mAP）对于评估 YOLOv11 模型至关重要，因为它提供了一个综合指标，涵盖了多个类别的精确度和召回率。mAP@0.50 衡量了在交并比（IoU）阈值为 0.50 时的精确度，专注于模型正确检测对象的能力。mAP@0.50:0.95 则在不同 IoU 阈值范围内对精确度进行平均，提供了全面的检测性能评估。高 mAP 分数表明模型在精确度和召回率之间取得了有效平衡，这对于自动驾驶和监控等应用非常重要。
 
-## Conclusion
+### 如何解释 YOLOv11 目标检测中的交并比（IoU）值？
 
-In this guide, we've taken a close look at the essential performance metrics for YOLO11. These metrics are key to understanding how well a model is performing and are vital for anyone aiming to fine-tune their models. They offer the necessary insights for improvements and to make sure the model works effectively in real-life situations.
+交并比（IoU）衡量预测边界框与真实边界框之间的重叠程度。IoU值范围从0到1，数值越高表示定位准确性越好。IoU值为1.0意味着完全对齐。通常，IoU阈值设为0.50来定义像mAP这样的指标中的真正例。较低的IoU值表明模型在精确定位对象方面存在困难，可以通过改进边界框回归或提高标注准确性来改善。
 
-Remember, the YOLO11 and Ultralytics community is an invaluable asset. Engaging with fellow developers and experts can open doors to insights and solutions not found in standard documentation. As you journey through object detection, keep the spirit of learning alive, experiment with new strategies, and share your findings. By doing so, you contribute to the community's collective wisdom and ensure its growth.
+### F1分数在评估YOLOv11目标检测模型中的重要性是什么？
 
-Happy object detecting!
+F1分数在评估YOLOv11模型时非常重要，因为它提供了精确度和召回率的调和平均值，平衡了假阳性和假阴性。在处理不平衡数据集或仅凭精确度或召回率不足以满足需求的应用时，F1分数尤为重要。高F1分数表明模型在检测对象时有效减少了漏检和误报，使其适用于安全系统和医学影像等关键应用。
 
-## FAQ
+### 使用Ultralytics YOLOv11进行实时目标检测的关键优势是什么？
 
-### What is the significance of [Mean Average Precision](https://www.ultralytics.com/glossary/mean-average-precision-map) (mAP) in evaluating YOLO11 model performance?
+Ultralytics YOLOv11在实时目标检测方面具有多重优势：
 
-Mean Average Precision (mAP) is crucial for evaluating YOLO11 models as it provides a single metric encapsulating precision and recall across multiple classes. mAP@0.50 measures precision at an IoU threshold of 0.50, focusing on the model's ability to detect objects correctly. mAP@0.50:0.95 averages precision across a range of IoU thresholds, offering a comprehensive assessment of detection performance. High mAP scores indicate that the model effectively balances precision and recall, essential for applications like autonomous driving and surveillance.
+- **速度和效率**：优化了高速推理，适合低延迟应用。
+- **高精度**：先进算法确保高mAP和IoU分数，平衡了精确度和召回率。
+- **灵活性**：支持包括目标检测、分割和分类在内的各种任务。
+- **易用性**：用户友好的界面、广泛的文档以及与平台如Ultralytics HUB的无缝集成（[HUB快速入门](../hub/quickstart.md))。
 
-### How do I interpret the Intersection over Union (IoU) value for YOLO11 object detection?
+这使得YOLOv11非常适合从自动驾驶车辆到智慧城市解决方案的各种应用。
 
-Intersection over Union (IoU) measures the overlap between the predicted and ground truth bounding boxes. IoU values range from 0 to 1, where higher values indicate better localization accuracy. An IoU of 1.0 means perfect alignment. Typically, an IoU threshold of 0.50 is used to define true positives in metrics like mAP. Lower IoU values suggest that the model struggles with precise object localization, which can be improved by refining bounding box regression or increasing annotation accuracy.
+### YOLOv11的验证指标如何帮助提升模型性能？
 
-### Why is the F1 Score important for evaluating YOLO11 models in object detection?
+YOLOv11的验证指标如精确度、召回率、mAP和IoU通过提供检测不同方面的洞察，有助于诊断和改进模型性能：
 
-The F1 Score is important for evaluating YOLO11 models because it provides a harmonic mean of precision and recall, balancing both false positives and false negatives. It is particularly valuable when dealing with imbalanced datasets or applications where either precision or recall alone is insufficient. A high F1 Score indicates that the model effectively detects objects while minimizing both missed detections and false alarms, making it suitable for critical applications like security systems and medical imaging.
+- **精确度**：有助于识别并减少假阳性。
+- **召回率**：确保所有相关对象都被检测到。
+- **mAP**：提供整体性能快照，指导一般改进。
+- **IoU**：帮助微调对象定位的准确性。
 
-### What are the key advantages of using Ultralytics YOLO11 for real-time object detection?
-
-Ultralytics YOLO11 offers multiple advantages for real-time object detection:
-
-- **Speed and Efficiency**: Optimized for high-speed inference, suitable for applications requiring low latency.
-- **High Accuracy**: Advanced algorithm ensures high mAP and IoU scores, balancing precision and recall.
-- **Flexibility**: Supports various tasks including object detection, segmentation, and classification.
-- **Ease of Use**: User-friendly interfaces, extensive documentation, and seamless integration with platforms like Ultralytics HUB ([HUB Quickstart](../hub/quickstart.md)).
-
-This makes YOLO11 ideal for diverse applications from autonomous vehicles to smart city solutions.
-
-### How can validation metrics from YOLO11 help improve model performance?
-
-Validation metrics from YOLO11 like precision, recall, mAP, and IoU help diagnose and improve model performance by providing insights into different aspects of detection:
-
-- **Precision**: Helps identify and minimize false positives.
-- **Recall**: Ensures all relevant objects are detected.
-- **mAP**: Offers an overall performance snapshot, guiding general improvements.
-- **IoU**: Helps fine-tune object localization accuracy.
-
-By analyzing these metrics, specific weaknesses can be targeted, such as adjusting confidence thresholds to improve precision or gathering more diverse data to enhance recall. For detailed explanations of these metrics and how to interpret them, check [Object Detection Metrics](#object-detection-metrics).
+通过分析这些指标，可以针对性地解决特定弱点，例如调整置信度阈值以提高精确度或收集更多多样化数据以增强召回率。有关这些指标及其解释的详细说明，请查看[目标检测指标](#object-detection-metrics)。

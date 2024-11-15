@@ -219,9 +219,9 @@ for box in boxes:
 
 #### 模型转换/导出问题
 
-**问题：**在将机器学习模型转换为不同格式或平台的过程中，用户可能会遇到错误或意外行为。
+**问题**：在将机器学习模型转换为不同格式或平台的过程中，用户可能会遇到错误或意外行为。
 
-**解决方案：**
+**解决方案**：
 
 - 兼容性检查：确保您使用的库和框架版本相互兼容。版本不匹配可能导致转换过程中出现意外错误。
 
@@ -251,19 +251,18 @@ for box in boxes:
 
 这些资源应为您调试和改进YOLO11项目提供坚实的基础，同时也能帮助您与YOLO11社区中的其他人建立联系。
 
-
-### 如果YOLO11无法识别我的数据集格式怎么办？
+### 如果 YOLO11 无法识别数据集格式怎么办？
 
 请确保您的数据集和标签符合预期格式。验证注释的准确性和高质量。如果遇到任何问题，请参考[数据收集和注释](https://docs.ultralytics.com/guides/data-collection-and-annotation/)指南以获取最佳实践。有关更多特定于数据集的指导，请查看文档中的[数据集](https://docs.ultralytics.com/datasets/)部分。
 
-## 我为什么应该在我的计算机视觉项目中使用Ultralytics HUB？
+## 我为什么应该在我的计算机视觉项目中使用 Ultralytics HUB？
 
 Ultralytics HUB 是无代码平台，简化了 YOLO 模型的管理、训练和部署。它支持无缝集成、实时跟踪和云训练，使其非常适合初学者和专业人士。通过我们的[Ultralytics HUB](https://docs.ultralytics.com/hub/)快速入门指南，了解更多关于它的功能以及它如何简化您的工作流程。
 
-## 在YOLO模型训练过程中常见的问题有哪些，如何解决？
+## 在 YOLO 模型训练过程中常见的问题有哪些，如何解决？
 
-YOLO模型训练过程中常见的问题包括数据格式错误、模型架构不匹配和[训练数据不足](https://www.ultralytics.com/glossary/training-data)。为解决这些问题，请确保您的数据集格式正确，检查兼容的模型版本，并增加您的训练数据。有关解决方案的完整列表，请参考我们的[YOLO常见问题](yolo-common-issues)指南。
+YOLO模型训练过程中常见的问题包括数据格式错误、模型架构不匹配和[训练数据不足](https://www.ultralytics.com/glossary/training-data)。为解决这些问题，请确保您的数据集格式正确，检查兼容的模型版本，并增加您的训练数据。
 
-## 我如何在边缘设备上部署我的YOLO模型进行实时对象检测？
+## 如何在边缘设备上部署 YOLO 模型进行实时目标检测？
 
 在NVIDIA Jetson和Raspberry Pi等边缘设备上部署YOLO模型需要将模型转换为如TensorRT或TFLite这样的兼容格式。按照我们的[NVIDIA Jetson](nvidia-jetson)和[Raspberry Pi](raspberry-pi)部署的分步指南开始在边缘硬件上进行实时对象检测。这些指南将引导您完成安装、配置和性能优化。
