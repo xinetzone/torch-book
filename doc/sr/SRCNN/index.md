@@ -1,0 +1,6 @@
+# SRCNN
+
+```{toctree}
+paper
+code
+```
