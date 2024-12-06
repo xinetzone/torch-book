@@ -3,6 +3,7 @@
 ```{toctree}
 basics/index
 transforms/index
+vision/index
 feature-extraction
 old/index
 ```
