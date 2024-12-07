@@ -1,0 +1,39 @@
+以下是与超分辨率卷积神经网络（SRCNN）相关的论文列表，包括原始工作、扩展和应用：
+
+
+## 1. 原始SRCNN论文：
+- **Dong, C., Loy, C. C., He, K., & Tang, X. (2016).**  
+  "Image Super-Resolution Using Deep Convolutional Networks."  
+  *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 38(2), 295-307.  
+  [DOI: 10.1109/TPAMI.2015.2439281](https://doi.org/10.1109/TPAMI.2015.2439281)
+
+## 2. 扩展和改进：
+- **Kim, J., Lee, J. K., & Lee, K. M. (2016).**  
+  "Accurate Image Super-Resolution Using Very Deep Convolutional Networks."  
+  *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition*, pp. 1646-1654.  
+  [arXiv:1511.04587](https://arxiv.org/abs/1511.04587)
+  
+- **Ledig, C., Theis, L., Huszár, F., Caballero, J., Cunningham, A., Acosta, A., & Aitken, A. P. (2017).**  
+  "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network."  
+  *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition*, pp. 4681-4690.  
+  [arXiv:1609.04802](https://arxiv.org/abs/1609.04802)
+  
+- **Shi, W., Caballero, J., Huszár, F., & Aitken, A. P. (2016).**  
+  "Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network."  
+  *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition*, pp. 1874-1883.  
+  [arXiv:1609.05158](https://arxiv.org/abs/1609.05158)
+
+SRCNN 提出了一种用于单图像超分辨率 （SR） 的新型深度学习方法。SRCNN 表明，传统的基于稀疏编码的 SR 方法可以重新表述为深度卷积神经网络。SRCNN 提出的结构具有简单和鲁棒的优点，可以应用于其他低级视觉问题，如图像去模糊或同步 SR+去噪。还可以研究网络以应对不同的上采样因子。
+
+主要贡献：
+1. SRCNN 提出了用于图像超分辨率的全卷积神经网络（fully convolutional neural network）。该网络直接学习低分辨率和高分辨率图像之间的端到端映射，除了优化之外，几乎没有前/后处理。
+2. SRCNN 建立了基于深度学习的 SR 方法和传统的基于稀疏编码的 SR 方法的关系。此关系为网络结构的设计提供了指导。
+3. 证明深度学习在超分辨率的经典计算机视觉问题中很有用，并且可以获得良好的质量和速度。
+
+## SRCNN 网络结构
+
+SRCNN 网络结构主要包括三个部分：
+
+- patch 提取和表示：从低分辨率图像中提取重叠的 patch，并通过卷积算子表示为高维向量。这些高维向量组成特征图（feature maps）。
+- 非线性映射：将每个高维向量非线性地映射到另一个高维向量上。这个映射过程可以通过1x1卷积实现，从而改变特征的个数但保持特征本身不变。非线性体现在使用了ReLU激活函数。
+- 重构：聚合高维向量以生成最终的高分辨率图像。重建后的图像应尽可能与原始高分辨率图像相似。
