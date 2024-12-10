@@ -7,11 +7,9 @@
 ## 导航
 
 ```{toctree}
-:maxdepth: 3
-
-tutorials/index
-datasets/index
+:hidden:
 sr/index
+datasets/index
 tips/index
 ecosystem/index
 appendix/index

@@ -2,7 +2,8 @@
 
 ```{toctree}
 basics/index
-transforms/index
+TorchScript/index
+vision-transforms/index
 feature-extraction
 old/index
 ```

@@ -101,6 +101,7 @@ dev = [
   "tensorflow",
   "onnx",
   "scikit-learn",
+  "kaleido",
 ]
 test = [
   "pytest",

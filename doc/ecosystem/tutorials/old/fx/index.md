@@ -1,8 +1,6 @@
 # `torch.fx`
 
 ```{toctree}
-:maxdepth: 2
-
 intro
 graph/index
 param_shape_control_flow
