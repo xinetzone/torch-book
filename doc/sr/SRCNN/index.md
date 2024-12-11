@@ -2,5 +2,5 @@
 
 ```{toctree}
 paper
-code
+srcnn
 ```

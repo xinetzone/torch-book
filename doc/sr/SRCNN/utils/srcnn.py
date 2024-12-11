@@ -1,6 +1,6 @@
 from torch import nn
 
-class SRCNNNet(nn.Module):
+class SRCNN(nn.Module):
     """SRCNN 网络结构用于图像超分辨率。
 
     SRCNN包含三个卷积层。对于每一层，可以定义输入通道数、输出通道数和卷积核大小。
