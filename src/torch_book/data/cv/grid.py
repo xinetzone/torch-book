@@ -50,12 +50,37 @@ class Grid(tv_tensors.TVTensor):
             for col, x in enumerate(w_space):
                 grid[row, col] = data[:, y:y + config.crop_size, x:x + config.crop_size]
         grid = grid.as_subclass(cls)
+        cls.height = height
+        cls.width = width
         return grid
     
-    def flatten(self) -> torch.Tensor:
-        """将 Grid 数据展平为 (N, C, H, W) 形状的 Tensor"""
-        num_rows, num_cols, c, h, w = self.shape
-        data = self.reshape(num_rows*num_cols, c, h, w)
+    def __len__(self) -> int:
+        """返回 Grid 中包含的图像块数量"""
+        return self.height * self.width
+    
+    def randmeshgrid(self, indexing: str | None = "ij") -> list[torch.Tensor, torch.Tensor]:
+        """返回随机排列的索引，用于打乱 Grid 中图像块的顺序"""
+        indexes = torch.meshgrid(
+            torch.randperm(self.height), torch.randperm(self.width),
+            indexing=indexing,
+        )
+        return indexes
+
+    def shuffle(self, indexes: list[torch.Tensor, torch.Tensor] | None = None):
+        """随机打乱 Grid 中图像块的顺序"""
+        if indexes is None:
+            indexes = self.randmeshgrid()
+        data = self[indexes]
+        return tv_tensors.wrap(data, like=self)
+    
+    def flatten(self) -> "Grid":
+        """将 Grid 数据展平为 (h*w, C, H, W) 形状的 Tensor"""
+        data = self.reshape(self.height*self.width, *self.shape[2:])
+        return tv_tensors.wrap(data, like=self)
+    
+    def unflatten(self) -> "Grid":
+        """将展平的 Grid 数据恢复为 (h, w, num_cols, C, H, W) 形状"""
+        data = self.reshape(self.height, self.width, *self.shape[1:])
         return tv_tensors.wrap(data, like=self)
 
 class PairedGrid(torch.nn.Module):

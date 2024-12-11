@@ -2,7 +2,7 @@
 
 数据集可以通过访问 {class}`detectron2.data.DatasetCatalog` 获取数据，或访问 {class}`detectron2.data.MetadataCatalog` 获取元数据(类名等)来使用。
 
-本文档解释了如何设置内置数据集，以便它们可以被上述 API 使用。[](datasets) 给出了如何使用 {class}`detectron2.data.DatasetCatalog` 和 {class}`detectron2.data.MetadataCatalog`，以及如何向它们添加新数据集的更深入的探讨。
+本文档解释了如何设置内置数据集，以便它们可以被上述 API 使用。[](./datasets) 给出了如何使用 {class}`detectron2.data.DatasetCatalog` 和 {class}`detectron2.data.MetadataCatalog`，以及如何向它们添加新数据集的更深入的探讨。
 
 Detectron2 内置对一些数据集的支持。假定数据集存在于环境变量 `DETECTRON2_DATASETS` 指定的目录中。如果需要，detectron2 将在这个目录下查找下面描述的结构中的数据集。
 

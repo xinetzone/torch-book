@@ -15,9 +15,9 @@ class SRCNN(nn.Module):
     """
 
     def __init__(self,
+                 upscale_factor=4,
                  channels=(3, 64, 32, 3),
                  kernel_sizes=(9, 1, 5),
-                 upscale_factor=4,
                  *args, **kwargs):
         super().__init__(*args, **kwargs)
         assert len(channels) == 4, (f'通道元组的长度应为4，但实际得到的长度是 {len(channels)}')

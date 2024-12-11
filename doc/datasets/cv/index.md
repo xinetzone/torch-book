@@ -2,4 +2,5 @@
 
 ```{toctree}
 DIV2K
+Set5
 ```

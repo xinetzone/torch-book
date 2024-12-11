@@ -3,4 +3,5 @@
 ```{toctree}
 paper
 srcnn
+train
 ```
