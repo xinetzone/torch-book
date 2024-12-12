@@ -38,10 +38,7 @@ jobs:
           cache-dependency-path: "pyproject.toml"
       - name: 🔧 Build HTML
         run: |
-          cd tests && bash init_openmmlab.sh && cd ..
           sudo apt-get install graphviz
-          pip install -U openmim
-          mim install mmcv
           pip install .[doc]
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
