@@ -42,7 +42,7 @@ jobs:
           sudo apt-get install graphviz
           pip install -U openmim
           mim install mmcv
-          pip install .[doc,dev]
+          pip install .[doc]
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
           invoke doc
