@@ -189,7 +189,7 @@ autoapi_member_order = "groupwise"
 
 # ``pydata-sphinx-theme`` 配置
 # Define the json_url for our version switcher.
-json_url = 'https://xinetzone.github.io/d2py/_static/switcher.json'
+json_url = 'https://xinetzone.github.io/torch-book/_static/switcher.json'
 # -- Sitemap -----------------------------------------------------------------
 # ReadTheDocs has its own way of generating sitemaps, etc.
 if not os.environ.get("READTHEDOCS"):
@@ -207,7 +207,6 @@ html_theme_options = {
     # 默认情况下，编辑按钮将指向版本库的根。
     # 如果你的文档被托管在一个子文件夹中，请使用以下配置：
     "path_to_docs": "doc/",  # 文档的路径，默认 `docs/``
-    "github_url": "https://github.com/xinetzone/torch-book",
     "repository_url": "https://github.com/xinetzone/torch_book",
     "repository_branch": "main",  # 文档库的分支，默认 `master`
     # -- 在导航栏添加一个按钮，链接到版本库的议题 ------------------------------
