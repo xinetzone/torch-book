@@ -10,7 +10,7 @@
 :hidden:
 
 concepts/index
-sr/index
+models/index
 datasets/index
 tips/index
 ecosystem/index
