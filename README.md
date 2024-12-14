@@ -52,3 +52,11 @@
 ```shell
 pip install torch-book
 ```
+
+## 文档构建
+
+```bash
+pip install .[doc]
+inv doc.clean
+inv doc
+```
