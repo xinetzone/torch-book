@@ -9,9 +9,9 @@
 ```{toctree}
 :hidden:
 
+concepts/index
 sr/index
 datasets/index
-concepts/index
 tips/index
 ecosystem/index
 appendix/index
