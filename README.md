@@ -53,6 +53,20 @@
 pip install torch-book
 ```
 
+## 开发指南
+
+推荐[使用 `anaconda3` 配置环境](https://www.zhihu.com/zvideo/1423062760733700096)：
+```bash
+conda create -n ai python=3.12
+conda activate ai
+pip install -e .[doc,dev]
+```
+
+安装 PyTorch GPU 版本（其他版本见 [PyTorch 安装指南](https://pytorch.org/get-started/locally/)）:
+```bash
+conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
+```
+
 ## 文档构建
 
 ```bash
