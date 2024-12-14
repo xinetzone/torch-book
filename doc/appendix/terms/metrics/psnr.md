@@ -1,11 +1,31 @@
 (metrics:psnr)=
 # PSNR
 
-峰值信噪比（Peak Signal-to-Noise Ratio，简写为 PSNR）。它是一种用于评估图像质量的指标，特别是在图像压缩和图像恢复（如超分辨率、去噪等）领域中广泛使用。
+峰值信噪比（[Peak Signal-to-Noise Ratio](https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio)，简写为 PSNR）。它是一种用于评估图像质量的指标，特别是在图像压缩和图像恢复（如超分辨率、去噪等）领域中广泛使用。
 
 ## PSNR 的基本概念
 
 PSNR 是通过比较原始图像（Ground Truth）和处理后的图像（如压缩后的图像或超分辨率重建的图像）之间的差异来评估图像质量的。具体来说，PSNR 衡量的是信号（即图像）的最大可能功率与噪声（即误差）的功率之间的比率。
+
+### 信噪比
+
+[信噪比](https://en.wikipedia.org/wiki/Signal-to-noise_ratio)（英语：Signal-to-noise ratio，缩写为 SNR 或 S/N），用于比较所需信号的强度与背景噪声的强度。其定义为信号功率与噪声功率的比率，以分贝（dB）为单位表示。大于比率1:1（高于0分贝）表示信号多于噪声。信噪比通常用于描述电子信号，也可以应用在各种形式的信号，比如冰芯内的同位素量，或细胞间的生物化学信号。
+
+$$
+\text{SNR} = {P_\mathrm{signal} \over P_\mathrm{noise}} = {A_\mathrm{signal}^2 \over A_\mathrm{noise}^2 }
+$$
+
+它的单位一般使用分贝，其值为十倍对数信号与噪声功率比：
+
+$$
+\mathrm{SNR (dB)} = 10 \log_{10} \left ( {P_\mathrm{signal} \over P_\mathrm{noise}} \right ) = 20 \log_{10} \left({A_\mathrm{signal} \over A_\mathrm{noise}} \right)
+$$
+
+其中：
+- $P_\mathrm{signal}$ 为信号功率（Power of Signal）。
+- $P_\mathrm{noise}$ 为噪声功率（Power of Noise）。
+- $A_\mathrm{signal}$ 为信号振幅（Amplitude of Signal）。
+- $A_\mathrm{noise}$ 为噪声振幅（Amplitude of Noise）。
 
 ## PSNR 的计算公式
 
@@ -16,7 +36,7 @@ $$
 $$
 
 其中：
-- $MAX_I$ 是图像像素值的最大可能值。通常，对于8位图像，$MAX_I = 255$，对于浮点型数据 $MAX_I = 1$。
+- $MAX_I$ 是图像像素值的最大可能值。通常，对于8位图像，$MAX_I = 255$，对于浮点型数据 $MAX_I = 1$。更为通用的表示是，如果每个采样点用 B 位线性脉冲编码调制表示，那么 MAXI 就是 $2^B - 1$。
 - $MSE$ 是均方误差（Mean Squared Error），表示原始图像和处理后图像之间的像素差异的平方的平均值。
 
 MSE 的计算公式为：

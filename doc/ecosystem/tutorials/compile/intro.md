@@ -1,6 +1,6 @@
 # `torch.compiler` 简介
 
-`torch.compiler` 是一个命名空间，通过它，一些内部编译器方法可以供用户使用。该命名空间的主要功能和特点是 {func}`torch.compile`。
+`torch.compiler` 命名空间，通过它，一些内部编译器方法可以供用户使用。该命名空间的主要功能和特点是 {func}`torch.compile`。
 
 `torch.compile` 是 PyTorch 2.x 中引入的 PyTorch 函数，旨在解决 PyTorch 中的精确 graph 捕获问题，并最终使软件工程师能够更快地运行他们的 PyTorch 程序。{func}`torch.compile` 是用 Python 编写的，标志着 PyTorch 从 C++ 过渡到 Python。
 

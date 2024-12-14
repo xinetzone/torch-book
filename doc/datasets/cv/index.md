@@ -1,6 +1,6 @@
 # 计算机视觉数据
 
 ```{toctree}
-DIV2K
 Set5
+DIV2K
 ```
