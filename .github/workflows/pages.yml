@@ -39,10 +39,11 @@ jobs:
       - name: 🔧 Build HTML
         run: |
           sudo apt-get install graphviz
-          pip install .[doc]
+          apt-get install build-essential libcairo2-dev libpango1.0-dev ffmpeg
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
           conda install -c conda-forge manim x264 ffmpeg
+          pip install .[doc]
           invoke doc
       - name: Setup Pages
         uses: actions/configure-pages@main
