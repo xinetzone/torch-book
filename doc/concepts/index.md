@@ -2,7 +2,7 @@
 
 ```{toctree}
 linear-algebra/index
-differential-calculus/index
+calculus/index
 probability/index
-compression
+compression/index
 ```
