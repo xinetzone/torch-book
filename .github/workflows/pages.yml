@@ -46,7 +46,6 @@ jobs:
           pip install .[doc] --upgrade
           conda install -c conda-forge pandoc compilers cppyy
           conda install -c conda-forge ffmpeg
-          conda install anaconda::pango
           pip install pycairo manim
           invoke doc
       - name: Setup Pages
