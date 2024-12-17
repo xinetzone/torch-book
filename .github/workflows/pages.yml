@@ -42,7 +42,9 @@ jobs:
           sudo apt-get install build-essential libcairo2-dev libpango1.0-dev ffmpeg
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
-          conda install -c conda-forge manim x264 ffmpeg
+          conda install -c conda-forge manim x264 ffmpeg pixi
+          pixi init
+          pixi add manim
           pip install .[doc]
           invoke doc
       - name: Setup Pages
