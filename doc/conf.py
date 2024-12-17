@@ -65,6 +65,9 @@ extensions = [
     # "sphinx.ext.ifconfig",
     # "sphinxext.opengraph",
     # "sphinx_immaterial",
+    "manim.utils.docbuild.manim_directive",
+    "manim.utils.docbuild.autocolor_directive",
+    "manim.utils.docbuild.autoaliasattr_directive",
 ]
 
 myst_enable_extensions = [
