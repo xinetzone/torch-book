@@ -39,14 +39,14 @@ jobs:
       - name: 🔧 Build HTML
         run: |
           sudo apt-get install graphviz
-          sudo apt-get update
-          sudo apt-get install libarchive-dev
+          sudo apt-get update && sudo apt-get upgrade
+          pip install --upgrade pip
           pip install sphinxcontrib-websupport
-          conda install -c conda-forge pandoc
+          pip install .[doc] --upgrade
+          conda install -c conda-forge pandoc compilers cppyy
           conda install -c conda-forge ffmpeg
           conda install anaconda::pango
           pip install pycairo manim
-          pip install .[doc]
           invoke doc
       - name: Setup Pages
         uses: actions/configure-pages@main
