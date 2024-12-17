@@ -45,8 +45,7 @@ jobs:
           pip install sphinxcontrib-websupport
           pip install .[doc] --upgrade
           conda install -c conda-forge pandoc compilers cppyy
-          conda install -c conda-forge ffmpeg
-          pip install  pangocairo manim
+          conda install -c conda-forge ffmpeg manim
           invoke doc
       - name: Setup Pages
         uses: actions/configure-pages@main
