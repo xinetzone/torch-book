@@ -41,12 +41,13 @@ jobs:
         run: |
           sudo apt-get install graphviz
           sudo apt-get update && sudo apt-get upgrade
+          sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev ffmpeg
           pip install --upgrade pip
           pip install sphinxcontrib-websupport
           pip install .[doc] --upgrade
           conda install -c conda-forge pandoc compilers cppyy
           conda install -c conda-forge ffmpeg manim
-          pip install pycairo manim
+          pip install manim
           invoke doc
       - name: Setup Pages
         uses: actions/configure-pages@main
