@@ -43,7 +43,7 @@ jobs:
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
           conda install -c conda-forge manim x264 ffmpeg 
-          pixi install pixi
+          conda install pixi
           pixi init
           pixi add manim
           pip install .[doc]
