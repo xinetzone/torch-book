@@ -39,6 +39,8 @@ jobs:
       - name: 🔧 Build HTML
         run: |
           sudo apt-get install graphviz
+          sudo apt-get update
+          sudo apt-get install libarchive-dev
           pip install sphinxcontrib-websupport
           conda install -c conda-forge pandoc
           conda install -c conda-forge ffmpeg
