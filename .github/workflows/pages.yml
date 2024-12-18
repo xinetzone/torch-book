@@ -40,8 +40,7 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v3
         with:
           version: 2024
-          packages: texlive-latex-base texlive-fonts-recommended texlive texlive-latex-extra texlive-fonts-extra \
-            texlive-latex-recommended texlive-science 
+          packages: texlive-latex-base texlive-fonts-recommended texlive texlive-latex-extra texlive-fonts-extra
       - name: 🔧 Build HTML
         run: |
           sudo apt-get install graphviz
