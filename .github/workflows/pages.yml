@@ -40,7 +40,10 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v3
         with:
           version: 2024
-          packages: texlive-latex-base texlive-fonts-recommended
+          packages: |
+            scheme-basic
+            hyperref
+            microtype
       - name: 🔧 Build HTML
         run: |
           sudo apt-get install graphviz
