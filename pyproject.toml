@@ -11,7 +11,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 
 dependencies = [
-  "d2py[dev]",
+  "taolib[dev]",
   "invoke",
   "numpy",
 ]

@@ -87,7 +87,7 @@ comments_config = {
     "hypothesis": True,
     "dokieli": False,
     "utterances": {
-        "repo": "xinetzone/torch_book",
+        "repo": "xinetzone/torch-book",
         "optional": "config",
     }
 }
@@ -207,10 +207,11 @@ html_theme_options = {
     # -- 如果你的文档只有一个页面，而且你不需要左边的导航栏，那么 ---------------
     # 你可以在 单页模式 下运行，
     # "single_page": False,  # 默认 `False`
+    "github_url": "https://github.com/xinetzone/torch-book",
     # 默认情况下，编辑按钮将指向版本库的根。
     # 如果你的文档被托管在一个子文件夹中，请使用以下配置：
     "path_to_docs": "doc/",  # 文档的路径，默认 `docs/``
-    "repository_url": "https://github.com/xinetzone/torch_book",
+    "repository_url": "https://github.com/xinetzone/torch-book",
     "repository_branch": "main",  # 文档库的分支，默认 `master`
     # -- 在导航栏添加一个按钮，链接到版本库的议题 ------------------------------
     # （与 `repository_url` 和 `repository_branch` 一起使用）
