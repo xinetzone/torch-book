@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path('__file__').resolve().parents[1]
 sys.path.extend([str(ROOT/'src'), str(ROOT/"doc"), str(ROOT/'doc/_ext')])
 from utils.icon import icon_links
-import torch_book
+# import torch_book
 
 if sys.platform == 'win32':
     import asyncio
@@ -30,7 +30,6 @@ copyright = '2021, xinetzone'
 author = 'xinetzone'
 
 # The full version, including alpha/beta/rc tags
-release = torch_book.__version__
 html_baseurl = 'https://xinetzone.github.io/torch-book'
 
 # -- General configuration ---------------------------------------------------
