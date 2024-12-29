@@ -49,7 +49,7 @@ doc = [
 ]
 
 dev = [
-  "taolib",
+  "taolib[flows]",
   "onnx",
   "onnxscript",
   "onnxruntime",
