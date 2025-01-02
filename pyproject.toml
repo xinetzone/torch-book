@@ -1,5 +1,5 @@
 [project]
-name = "torch_book"
+name = "torch-book"
 version = "0.0.2"
 description = "道法自然"
 authors = [
