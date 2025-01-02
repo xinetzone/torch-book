@@ -1,7 +1,7 @@
 [project]
-name = "torch-book"
-version = "0.1.1"
-description = "AI Book"
+name = "torch_book"
+version = "0.0.2"
+description = "道法自然"
 authors = [
     {name = "xinetzone", email = "735613050@qq.com"},
 ]
@@ -11,67 +11,45 @@ license = {file = "LICENSE"}
 maintainers = [
   {name = "xinetzone", email = "735613050@qq.com"},
 ]
-dependencies = []
+dependencies = [
+  "taolib",
+]
 
 [project.urls]
-Repository = "https://github.com/xinetzone/torch-book"
-Documentation = "https://torch-book.readthedocs.io/"
+Home = "https://github.com/xinetzone/torch-book"
 
 [project.optional-dependencies]
 doc = [
-  "myst-nb",
-  "sphinx",
-  "sphinx-book-theme",
-  "sphinxext-rediraffe",
-  "sphinx-copybutton",
-  "sphinxcontrib-mermaid",
-  "sphinx-design",
-  "sphinxcontrib-bibtex",
-  "sphinx-thebe",
-  "sphinx-comments",
-  "matplotlib",
-  "sphinx-automodapi",
-  "sphinx-plotly-directive",
-  "sphinx-sitemap",
-  "sphinx-proof",
-  # MMLab
-  "terminaltables",
-  "pycocotools",
-  "shapely",
-  "albumentations",
-  "numba",
-  "timm",
-  "av",
-  "click",  # required by mmagic/utils/io_utils.py
-  "captum",
-  "Flask-Compress",
-  "sphinx-autoapi",
+    "xyzstyle",
+    "sphinx",
+    # "ablog",
+    "ipywidgets",
+    "folium",
+    "numpy",
+    "matplotlib",
+    "sphinx-comments",
+    "myst-nb",
+    "nbclient",
+    "pandas",
+    "plotly",
+    "sphinx-design",
+    "sphinx-examples",
+    "sphinx-copybutton",
+    "sphinx-contributors",
+    "sphinx-thebe",
+    "sphinxcontrib-bibtex",
+    "sphinxext-opengraph",
+    "sphinx-sitemap",
+    "sphinx-autoapi",
+    "graphviz",
 ]
 
-dev = [
-  "taolib[flows]",
-  "onnx",
-  "onnxscript",
-  "onnxruntime",
-  "tables",
-  "imageio",
-  "controlnet_aux",
-  "diffusers",
-  "einops",
-  "face-alignment",
-  "facexlib",
-  "lpips",
-  "mediapipe",
-  "opencv-python",
-  "pandas",
-  "resize_right",
-  "tensorboard",
-  "transformers",
-  "accelerate",
-  "tensorflow",
-  "onnx",
-  "scikit-learn",
-  "kaleido",
+flows = [
+    "invoke",
+]
+
+gui = [
+  "PySide6",
 ]
 
 [build-system]
