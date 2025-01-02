@@ -1,285 +1,218 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-
 import os
+# === Path setup =====================================================================================
 import sys
-from pathlib import Path
-
-ROOT = Path('__file__').resolve().parents[1]
-sys.path.extend([str(ROOT/'src'), str(ROOT/"doc"), str(ROOT/'doc/_ext')])
-from utils.icon import icon_links
-# import torch_book
-
 if sys.platform == 'win32':
     import asyncio
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.extend([str(ROOT/'doc')])
+from utils.links import icon_links
 
-# -- Project information -----------------------------------------------------
+# == Project 信息 =====================================================================================
+project = 'torch-book' # 项目名称
+author = 'xinetzone' # 文档的作者
+copyright = '2021, xinetzone' # 版权信息
 
-project = 'torch_book'
-copyright = '2021, xinetzone'
-author = 'xinetzone'
+# == 国际化输出 =======================================================================================
+language = 'zh_CN'
+locale_dirs = ['../locales/']  # po files will be created in this directory
+# gettext_compact = False  # optional: avoid file concatenation in sub directories.
 
-# The full version, including alpha/beta/rc tags
-html_baseurl = 'https://xinetzone.github.io/torch-book'
-
-# -- General configuration ---------------------------------------------------
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+# 通用配置
+# =====================================================================================================
+# 表示 Sphinx 扩展的模块名称的字符串列表。它们可以是
+# Sphinx 自带的插件（命名为 'sphinx.ext.*'）或您自定义的插件。
+# -------------------------------------------------------------------------------------
 extensions = [
     "myst_nb",
-    # "nbsphinx",  
-    "sphinx.ext.extlinks",
-    "sphinx.ext.intersphinx",
-    "sphinx_thebe",
-    "sphinx_copybutton",
-    "sphinx_comments",
-    "sphinxcontrib.mermaid",
-    "matplotlib.sphinxext.plot_directive",
-    "sphinx_plotly_directive",
-    "sphinx_sitemap",
-    "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
-    "sphinx_automodapi.automodapi",
-    "sphinx_automodapi.smart_resolver",
-    'autoapi.extension',
-    "sphinx.ext.todo",
-    "sphinxcontrib.bibtex",
-    # "sphinx_togglebutton",
-    "sphinx.ext.viewcode",
-    # "sphinx.ext.doctest",
     "sphinx_design",
-    "sphinx_proof",
-    # "sphinx.ext.ifconfig",
-    # "sphinxext.opengraph",
-    # "sphinx_immaterial",
-    "manim.utils.docbuild.manim_directive",
-    "manim.utils.docbuild.autocolor_directive",
-    "manim.utils.docbuild.autoaliasattr_directive",
+    'autoapi.extension', # 自动生成API文档
+    "sphinx.ext.viewcode", # 添加到高亮源代码的链接
+    "sphinx.ext.extlinks", # 缩短外部链接
+    "sphinx.ext.intersphinx", # 链接到其他文档
+    'sphinx_copybutton', # 为代码块添加复制按钮。
+    "sphinx_comments", # 为 Sphinx 文档添加评论和注释功能。
+    "sphinx.ext.napoleon", # 支持 Google 和 Numpy 风格的文档字符串
 ]
 
+# 在此添加包含模板的任何路径，相对于此目录。
+# -------------------------------------------------------------------------------------
+templates_path = ['_templates']
+# 相对于源目录的模式列表，用于匹配在查找源文件时要忽略的文件和目录。
+# 此模式还会影响 html_static_path 和 html_extra_path。
+# -------------------------------------------------------------------------------------
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+# 链接到其他项目的文档
+# -------------------------------------------------------------------------------------
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3.12", None),
+    "sphinx": ("https://daobook.github.io/sphinx/", None),
+    "pst": ("https://daobook.github.io/pydata-sphinx-theme/", None),
+}
+# 缩短外部链接
+# -------------------------------------------------------------------------------------
+extlinks = {
+    'daobook': ('https://daobook.github.io/%s', 'Daobook %s'),
+    'xinetzone': ('https://xinetzone.github.io/%s', 'xinetzone %s'),
+}
+# == 配置复制按钮 ====================================================================================
+# 使用 ``:not()`` 排除复制按钮出现在笔记本单元格编号上
+# 默认的 copybutton 选择器是 `div.highlight pre`
+copybutton_exclude = '.linenos, .gp' # 跳过 Pygments 生成的所有提示符
+copybutton_selector = ":not(.prompt) > div.highlight pre"
+
+# == HTML 输出 =======================================================================================
+# 用于 HTML 和 HTML Help 页面的主题
+# -------------------------------------------------------------------------------------
+html_theme = 'xyzstyle' # 使用的主题名称
+html_logo = "_static/images/logo.jpg"
+html_title = "Sphinx xyzstyle Theme" # 网站标题
+html_copy_source = True
+html_favicon = "_static/images/favicon.jpg"
+html_last_updated_fmt = '%Y-%m-%d, %H:%M:%S' # 文档的最后更新时间格式
+# 在此添加包含自定义静态文件（如样式表）的任何路径，相对于此目录。
+# 它们会在内置静态文件之后被复制，因此名为 "default.css" 的文件将覆盖内置的 "default.css"。
+html_static_path = ['_static']
+html_css_files = ["custom.css"]
+
+# == 主题选项 ========================================================================================
+# 选项字典，影响所选主题的外观和感觉。这些选项是特定于主题的。
+# -------------------------------------------------------------------------------------
+html_theme_options = {
+    "use_sidenotes": True,  # 启用侧边注释/页边注释
+    "repository_url": f"https://github.com/xinetzone/{project}",
+    "use_repository_button": True,  # 显示“在 GitHub 上查看”按钮
+    "announcement": "👋欢迎进入编程视界！👋", # 公告横幅
+    "back_to_top_button": True,  # 显示“返回顶部”按钮
+    "use_source_button": True,  # 显示“查看源代码”按钮
+    "use_edit_page_button": True,  # 显示“编辑此页”按钮
+    "use_issues_button": True,  # 显示“报告问题”按钮
+    # 图标链接是一组图像和图标，每个图标都链接到一个页面或外部网站
+    # 如果你希望展示社交媒体图标、GitHub 徽章或项目标志，它们会很有帮助
+    "icon_links": icon_links,
+}
+
+# 为您的Sphinx网站添加评论和注释功能
+# -------------------------------------------------------------------------------------
+comments_config = {
+   "hypothesis": True,
+    # "dokieli": True,
+   "utterances": {
+      "repo": f"xinetzone/{project}",
+      "optional": "config",
+   }
+}
+
+# 笔记本执行模式
+nb_execution_mode = "off"
+# ===================== 可选 ==========================================================
+# 自动生成 API 文档的路径
+# -------------------------------------------------------------------------------------
+extensions.append("autoapi.extension")
+autoapi_dirs = [f"../src/{project.replace('-', '_')}"]
+# 在文档中嵌入 Graphviz 图
+# -------------------------------------------------------------------------------------
+extensions.append("sphinx.ext.graphviz")
+graphviz_output_format = "svg"
+inheritance_graph_attrs = dict(
+    rankdir="LR",
+    fontsize=14,
+    ratio="compress",
+)
+# 在 Sphinx 文档页面中渲染指定 GitHub 仓库的贡献者列表
+# -------------------------------------------------------------------------------------
+extensions.append('sphinx_contributors')
+# 配置用于交互的启动按钮
+# -------------------------------------------------------------------------------------
+# 这些按钮将在页面底部显示，可用于启动笔记本或演示。
+extensions.append("sphinx_thebe")
+html_theme_options.update({
+    "repository_branch": "main",
+    "path_to_docs": "doc",
+    "launch_buttons": {
+        "binderhub_url": "https://mybinder.org",
+        "colab_url": "https://colab.research.google.com/",
+        "deepnote_url": "https://deepnote.com/",
+        "notebook_interface": "jupyterlab",
+        "thebe": True,
+        # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
+    },
+})
+thebe_config = {
+    "repository_url": f"https://github.com/xinetzone/{project}",
+    "repository_branch": "main",
+    "selector": "div.highlight",
+    # "selector": ".thebe",
+    # "selector_input": "",
+    # "selector_output": "",
+    # "codemirror-theme": "blackboard",  # Doesn't currently work
+    # "always_load": True,  # To load thebe on every page
+}
+# 为 Sphinx 文档添加 Open Graph 元数据。
+# -------------------------------------------------------------------------------------
+extensions.append("sphinxext.opengraph")
+ogp_site_url = f"https://{project}.readthedocs.io/zh-cn/latest/"
+ogp_social_cards = {
+    "site_url": f"{project}.readthedocs.io",  # 请将此替换为您的站点 URL
+    "image": "_static/images/logo.jpg", # 请确保您的图片是 PNG 或 JPEG 图片，而不是 SVG
+    "font": "Noto Sans CJK JP", # 支持中文字体
+    "line_colors": "#4078c0",
+}
+# 用于生成多版本和多语言的 sitemaps.org 兼容的站点地图
+# -------------------------------------------------------------------------------------
+extensions.append("sphinx_sitemap")
+sitemap_url_scheme = "{lang}{version}{link}"
+if not os.environ.get("READTHEDOCS"):
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
+    sitemap_url_scheme = "{link}"
+elif os.environ.get("GITHUB_ACTIONS"):
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "https://xinetzone.github.io/")
+sitemap_locales = [None] # 语言列表
+
+# 其他配置
+# -------------------------------------------------------------------------------------
+nitpick_ignore = [
+    ("py:class", "docutils.nodes.document"),
+    ("py:class", "docutils.parsers.rst.directives.body.Sidebar"),
+]
+# application/vnd.plotly.v1+json and application/vnd.bokehjs_load.v0+json
+# unknown_mime_type - application/vnd.plotly.v1+json and application/vnd.bokehjs_load.v0+json
+# domains - sphinx_proof.domain::prf needs to have `resolve_any_xref` method
+# mime_priority - latex priority not set in myst_nb for text/html, application/javascript
+suppress_warnings = [
+    "mystnb.unknown_mime_type", "mystnb.mime_priority",  # 禁用 application/vnd.plotly.v1+json and application/vnd.bokehjs_load.v0+json 警告
+    "myst.xref_missing", "myst.domains", # 禁用 myst 警告
+    "ref.ref",
+    "autoapi.python_import_resolution", "autoapi.not_readable" # 禁用 autoapi 警告
+]
+numfig = True
 myst_enable_extensions = [
-    "colon_fence",
+    "dollarmath",
     "amsmath",
     "deflist",
-    "dollarmath",
-    "html_admonition",
-    "html_image",
+    # "html_admonition",
+    # "html_image",
+    "colon_fence",
+    # "smartquotes",
     "replacements",
-    "smartquotes",
+    # "linkify",
     "substitution",
-    "tasklist",
 ]
 
-comments_config = {
-    "hypothesis": True,
-    "dokieli": False,
-    "utterances": {
-        "repo": "xinetzone/torch-book",
-        "optional": "config",
-    }
-}
-
-autodoc_default_options = {
-    'autosummary': True,
-}
-
-suppress_warnings = [
-    "mystnb.unknown_mime_type",  # 禁用 application/vnd.plotly.v1+json and application/vnd.bokehjs_load.v0+json 警告
-    "myst.xref_missing", # 禁用 myst 警告
-    "autoapi.python_import_resolution", "autoapi.not_readable" # 禁用 autoapi 警告
-    "sphinx_automodapi.automodapi",
-    "autosectionlabel.*", "autosummary", "intersphinx.external",
-    "autodoc", "autodoc.import_object"
-]
-
-# extlinks = {
-#     # 'duref': ('https://docutils.sourceforge.io/docs/ref/rst/'
-#     #           'restructuredtext.html#%s', ''),
-#     # 'durole': ('https://docutils.sourceforge.io/docs/ref/rst/'
-#     #            'roles.html#%s', ''),
-#     # 'dudir': ('https://docutils.sourceforge.io/docs/ref/rst/'
-#     #           'directives.html#%s', ''),
-#     # 'daobook': ('https://daobook.github.io/%s', ''),
-# }
-
-intersphinx_mapping = {
-    'python': ('https://daobook.github.io/cpython/', None),
-    'sphinx': ('https://daobook.github.io/sphinx/', None),
-    'peps': ('https://daobook.github.io/peps', None),
-    "pytorch": ("https://pytorch.org/docs/stable", None),
-    "torchvision": ("https://pytorch.org/vision/stable", None),
-    "ultralytics": ("https://docs.ultralytics.com/zh", None),
-    "mmengine": ("https://mmengine.readthedocs.io/zh-cn/latest", None),
-}
-
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
-
-# The language for content autogenerated by Sphinx. Refer to documentation
-# for a list of supported languages.
-#
-# This is also used if you do content translation via gettext catalogs.
-# Usually you set "language" from the command line for these cases.
-language = 'zh_CN'
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-# -- Options for HTML output -------------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-html_theme = 'sphinx_book_theme'
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-html_css_files = ["default.css"]
-
-# -- 国际化输出 ----------------------------------------------------------------
-
-locale_dirs = ['locales/']  # path is example but recommended.
-gettext_compact = False  # optional.
-
-# -- 主题设置 -------------------------------------------------------------------
-
-# 定制主侧栏
+# 添加版本切换器下拉菜单
+extensions.append("_ext.rtd_version")
+html_theme_options['primary_sidebar_end'] = ["version-switcher",]
+# 定制侧边栏
 html_sidebars = {
-    "*": [
+    "reference/blog/*": [
+        "navbar-logo.html",
         "search-field.html",
+        "ablog/postcard.html",
+        "ablog/recentposts.html",
+        "ablog/tagcloud.html",
+        "ablog/categories.html",
+        "ablog/archives.html",
         "sbt-sidebar-nav.html",
-    ],
-    "posts/**": [
-        "postcard.html",
-        "recentposts.html",
-        "tagcloud.html",
-        "categories.html",
-        "archives.html",
-        "searchbox.html",
-    ],
+    ]
 }
-
-todo_include_todos = True
-
-# -- Options for autosummary/autodoc output ------------------------------------
-autosummary_generate = True
-autodoc_typehints = "description"
-autodoc_member_order = "groupwise"
-
-# -- Options for autoapi -------------------------------------------------------
-autoapi_type = "python"
-autoapi_dirs = ["../src/torch_book"]
-autoapi_keep_files = False # 要开始自己编写 API 文档，你可以让 AutoAPI 保留其生成的文件作为基础
-autoapi_root = "api"
-autoapi_member_order = "groupwise"
-
-# ``pydata-sphinx-theme`` 配置
-# Define the json_url for our version switcher.
-json_url = 'https://xinetzone.github.io/torch-book/_static/switcher.json'
-# -- Sitemap -----------------------------------------------------------------
-# ReadTheDocs has its own way of generating sitemaps, etc.
-if not os.environ.get("READTHEDOCS"):
-    extensions += ["sphinx_sitemap"]
-    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
-    sitemap_locales = [None]
-    sitemap_url_scheme = "{link}"
-# Define the version we use for matching in the version switcher.
-version_match = os.environ.get("READTHEDOCS_VERSION")
-
-html_theme_options = {
-    # -- 如果你的文档只有一个页面，而且你不需要左边的导航栏，那么 ---------------
-    # 你可以在 单页模式 下运行，
-    # "single_page": False,  # 默认 `False`
-    "github_url": "https://github.com/xinetzone/torch-book",
-    # 默认情况下，编辑按钮将指向版本库的根。
-    # 如果你的文档被托管在一个子文件夹中，请使用以下配置：
-    "path_to_docs": "doc/",  # 文档的路径，默认 `docs/``
-    "repository_url": "https://github.com/xinetzone/torch-book",
-    "repository_branch": "main",  # 文档库的分支，默认 `master`
-    # -- 在导航栏添加一个按钮，链接到版本库的议题 ------------------------------
-    # （与 `repository_url` 和 `repository_branch` 一起使用）
-    # -- 在导航栏添加一个按钮，以下载页面的源文件。
-    # "use_download_button": True,  # 默认 `True`
-    # 你可以在每个页面添加一个按钮，允许用户直接编辑页面文本，
-    # 并提交拉动请求以更新文档。
-    "use_edit_page_button": True,
-    # 在导航栏添加一个按钮来切换全屏的模式。
-    # "use_fullscreen_button": True,  # 默认 `True`
-    # -- 在导航栏中添加一个链接到文档库的按钮。----------------------------------
-    # "use_repository_button": True,  # 默认 `False`
-    # -- 包含从 Jupyter 笔记本建立页面的 Binder 启动按钮。 ---------------------
-    # "launch_buttons": '', # 默认 `False`
-    "home_page_in_toc": False,  # 是否将主页放在导航栏（顶部）
-    # -- 只显示标识，不显示 `html_title`，如果它存在的话。-----
-    # -- 在导航栏中显示子目录，向下到这里列出的深度。 ----
-    # "show_navbar_depth": 2,
-    # -- 在侧边栏页脚添加额外的 HTML -------------------
-    # （如果 `sbt-sidebar-footer.html `在 `html_sidebars` 中被使用）。
-    # "extra_navbar": extra_navbar,
-    # -- 在每个页面的页脚添加额外的 HTML。---
-    # "extra_footer": '',
-    # （仅限开发人员）触发一些功能，使开发主题更容易。
-    # "theme_dev_mode": False
-    # 重命名页内目录名称
-    # "toc_title": "导航",
-    "launch_buttons": {
-        # https://mybinder.org/v2/gh/xinetzone/torch_book/main
-        "binderhub_url": "https://mybinder.org",
-        # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
-        "colab_url": "https://colab.research.google.com/",
-        # 你可以控制有人点击启动按钮时打开的界面。
-        "notebook_interface": "jupyterlab",
-        "thebe": True,  # Thebe 实时代码单元格,
-        "deepnote_url": "https://deepnote.com",
-    },
-    # 图标可以参考 https://fontawesome.com/icons
-    "icon_links": icon_links,
-    "switcher": {
-        "json_url": json_url,
-        "version_match": version_match,
-    },
-    "footer_start": ["version-switcher", "copyright"],
-    "footer_end": ["sphinx-version", "last-updated"],
-}
-# -- 自定义网站的标志 --------------
-html_logo = 'logo.jpg'
-# The name of an image file (within the static path) to use as favicon of the
-# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
-html_favicon = "page-logo.jfif"
-
-# -- 自定义网站的标题 --------------
-# html_title = '动手学习 Python'
-
-# 如果你希望stderr和stdout中的每个输出都被合并成一个流，请使用以下配置。
-# 避免将 jupter 执行报错的信息输出到 cmd
-nb_merge_streams = True
-nb_execution_allow_errors = True
-nb_execution_mode = "off" # "off"
-# nbsphinx_assume_equations = False
-nb_execution_excludepatterns = []
-
-bibtex_bibfiles = ["refs.bib"]
-# To test that style looks good with common bibtex config
-bibtex_reference_style = "author_year"
-graphviz_output_format = 'svg'
-
-numfig = True
-todo_include_todos = True
-navigation_with_keys = True
