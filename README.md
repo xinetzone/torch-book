@@ -38,12 +38,12 @@
 [binder-link]: https://mybinder.org/v2/gh/xinetzone/torch-book/main
 [install-badge]: https://img.shields.io/pypi/dw/torch-book?label=pypi%20installs
 [install-link]: https://pypistats.org/packages/torch-book
-[status-badge]: https://readthedocs.org/projects/pytorch-book/badge/?version=latest
-[status-link]: https://pytorch-book.readthedocs.io/zh-cn/latest/?badge=latest
+[status-badge]: https://readthedocs.org/projects/torch-book/badge/?version=latest
+[status-link]: https://torch-book.readthedocs.io/zh-cn/latest/?badge=latest
 [download-badge]: https://pepy.tech/badge/torch-book
 [download-link]: https://pepy.tech/project/torch-book
-[rtd-badge]: https://readthedocs.org/projects/pytorch-book/badge/?version=latest
-[rtd-link]: https://pytorch-book.readthedocs.io/zh-cn/latest/?badge=latest
+[rtd-badge]: https://readthedocs.org/projects/torch-book/badge/?version=latest
+[rtd-link]: https://torch-book.readthedocs.io/zh-cn/latest/?badge=latest
 
 ## 支持 PyPI
 
