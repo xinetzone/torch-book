@@ -13,7 +13,6 @@
 [![PyPI - Downloads][install-badge]][install-link]
 ![repo size](https://img.shields.io/github/repo-size/xinetzone/torch-book.svg)
 [![Downloads Week](https://pepy.tech/badge/torch-book/week)](https://pepy.tech/project/torch-book)
-[![Documentation Status][rtd-badge]][rtd-link]
 [![Upload Python Package][upload-python-package-badge]][upload-python-package-link]
 
 借助 PyTorch 探索有趣之事。
