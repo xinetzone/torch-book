@@ -12,7 +12,7 @@ maintainers = [
   {name = "xinetzone", email = "735613050@qq.com"},
 ]
 dependencies = [
-  "taolib",
+  "taolib[flows]",
 ]
 
 [project.urls]
