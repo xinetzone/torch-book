@@ -1,0 +1,12 @@
+[
+  {
+    "name": "main",
+    "version": "main",
+    "url": "https://xinetzone.github.io/torch-book/"
+  },
+  {
+    "name": "RTD",
+    "version": "latest",
+    "url": "https://torch-book.readthedocs.io/zh-cn/"
+  }
+]

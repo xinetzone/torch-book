@@ -1,0 +1,82 @@
+[project]
+name = "torch-book"
+version = "0.1.1"
+description = "AI Book"
+authors = [
+    {name = "xinetzone", email = "735613050@qq.com"},
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {file = "LICENSE"}
+maintainers = [
+  {name = "xinetzone", email = "735613050@qq.com"},
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/xinetzone/torch-book"
+Documentation = "https://torch-book.readthedocs.io/"
+
+[project.optional-dependencies]
+doc = [
+  "myst-nb",
+  "sphinx",
+  "sphinx-book-theme",
+  "sphinxext-rediraffe",
+  "sphinx-copybutton",
+  "sphinxcontrib-mermaid",
+  "sphinx-design",
+  "sphinxcontrib-bibtex",
+  "sphinx-thebe",
+  "sphinx-comments",
+  "matplotlib",
+  "sphinx-automodapi",
+  "sphinx-plotly-directive",
+  "sphinx-sitemap",
+  "sphinx-proof",
+  # MMLab
+  "terminaltables",
+  "pycocotools",
+  "shapely",
+  "albumentations",
+  "numba",
+  "timm",
+  "av",
+  "click",  # required by mmagic/utils/io_utils.py
+  "captum",
+  "Flask-Compress",
+  "sphinx-autoapi",
+]
+
+dev = [
+  "taolib[flows]",
+  "onnx",
+  "onnxscript",
+  "onnxruntime",
+  "tables",
+  "imageio",
+  "controlnet_aux",
+  "diffusers",
+  "einops",
+  "face-alignment",
+  "facexlib",
+  "lpips",
+  "mediapipe",
+  "opencv-python",
+  "pandas",
+  "resize_right",
+  "tensorboard",
+  "transformers",
+  "accelerate",
+  "tensorflow",
+  "onnx",
+  "scikit-learn",
+  "kaleido",
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true

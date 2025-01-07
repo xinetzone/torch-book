@@ -1,0 +1,61 @@
+[project]
+name = "torch-book"
+version = "0.0.2"
+description = "道法自然"
+authors = [
+    {name = "xinetzone", email = "735613050@qq.com"},
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {file = "LICENSE"}
+maintainers = [
+  {name = "xinetzone", email = "735613050@qq.com"},
+]
+dependencies = []
+
+[project.urls]
+Home = "https://github.com/xinetzone/torch-book"
+
+[project.optional-dependencies]
+doc = [
+    "xyzstyle",
+    "sphinx",
+    # "ablog",
+    "ipywidgets",
+    "folium",
+    "numpy",
+    "matplotlib",
+    "sphinx-comments",
+    "myst-nb",
+    "nbclient",
+    "pandas",
+    "plotly",
+    "sphinx-design",
+    "sphinx-examples",
+    "sphinx-copybutton",
+    "sphinx-contributors",
+    "sphinx-thebe",
+    "sphinxcontrib-bibtex",
+    "sphinxext-opengraph",
+    "sphinx-sitemap",
+    "sphinx-autoapi",
+    "graphviz",
+    "sphinxcontrib-mermaid",
+    "sphinx-proof",
+]
+
+flows = [
+    "taolib[flows]",
+    "ultralytics",
+]
+
+gui = [
+  "PySide6",
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
