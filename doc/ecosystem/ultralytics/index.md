@@ -6,5 +6,4 @@ modes/index
 tasks/index
 solutions/index
 guides/index
-test
 ```
