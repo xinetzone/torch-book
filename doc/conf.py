@@ -70,7 +70,7 @@ copybutton_selector = ":not(.prompt) > div.highlight pre"
 # -------------------------------------------------------------------------------------
 html_theme = 'xyzstyle' # 使用的主题名称
 html_logo = "_static/images/logo.jpg"
-html_title = "Sphinx xyzstyle Theme" # 网站标题
+html_title = "AI World" # 网站标题
 html_copy_source = True
 html_favicon = "_static/images/favicon.jpg"
 html_last_updated_fmt = '%Y-%m-%d, %H:%M:%S' # 文档的最后更新时间格式
@@ -114,6 +114,8 @@ nb_execution_mode = "off"
 # -------------------------------------------------------------------------------------
 extensions.append("autoapi.extension")
 autoapi_dirs = [f"../src/{project.replace('-', '_')}"]
+autoapi_root = "autoapi"
+autoapi_generate_api_docs = False
 # 在文档中嵌入 Graphviz 图
 # -------------------------------------------------------------------------------------
 extensions.append("sphinx.ext.graphviz")
