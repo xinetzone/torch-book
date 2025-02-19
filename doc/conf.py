@@ -52,6 +52,7 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3.12", None),
     "sphinx": ("https://daobook.github.io/sphinx/", None),
     "pst": ("https://daobook.github.io/pydata-sphinx-theme/", None),
+    "ultralytics": ("https://docs.ultralytics.com/", None),
 }
 # 缩短外部链接
 # -------------------------------------------------------------------------------------

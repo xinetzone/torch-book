@@ -42,6 +42,7 @@ doc = [
     "graphviz",
     "sphinxcontrib-mermaid",
     "sphinx-proof",
+    "ultralytics",
 ]
 
 flows = [

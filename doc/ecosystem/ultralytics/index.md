@@ -1,9 +1,19 @@
 # {mod}`ultralytics` 框架
 
+- 2016 年发布的YOLOv2 通过纳入批量归一化、锚框和维度集群改进了原始模型。
+- 2018 年推出的YOLOv3 使用更高效的骨干网络、多锚和空间金字塔池进一步增强了模型的性能。
+- YOLOv4于 2020 年发布，引入了 Mosaic数据增强、新的无锚检测头和新的损失函数等创新技术。
+- YOLOv5进一步提高了模型的性能，并增加了超参数优化、集成实验跟踪和自动导出为常用导出格式等新功能。
+- YOLOv6于 2022 年由美团开源，目前已用于该公司的许多自主配送机器人。
+0 YOLOv7增加了额外的任务，如 COCO 关键点数据集的姿势估计。
+- YOLOv8Ultralytics YOLOv8 引入了新的功能和改进，以提高性能、灵活性和效率，支持全方位的视觉人工智能任务、
+- YOLOv9引入了可编程梯度信息 (PGI) 和广义高效层聚合网络 (GELAN) 等创新方法。
+- YOLOv10是由清华大学的研究人员使用该软件包创建的。 UltralyticsPython 软件包创建的。该版本通过引入端到端头（End-to-End head），消除了非最大抑制（NMS）要求，实现了实时目标检测的进步。
+- YOLO11 🚀新消息：Ultralytics 最新的YOLO 模型可在物体检测、分割、姿态估计、跟踪和分类等多项任务中提供最先进的 (SOTA) 性能，充分利用了各种人工智能应用和领域的能力。
+
 ```{toctree}
-intro
-modes/index
-tasks/index
-solutions/index
-guides/index
+yolov1
+yolov2
+yolov3
+ref/index
 ```
