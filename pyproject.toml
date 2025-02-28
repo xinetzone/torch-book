@@ -1,6 +1,6 @@
 [project]
 name = "torch-book"
-version = "0.0.2"
+version = "0.0.3"
 description = "道法自然"
 authors = [
     {name = "xinetzone", email = "735613050@qq.com"},
@@ -47,7 +47,6 @@ doc = [
 
 flows = [
     "taolib[flows]",
-    "ultralytics",
 ]
 
 gui = [
