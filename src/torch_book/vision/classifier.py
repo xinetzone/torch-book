@@ -103,7 +103,7 @@ class Classifier:
                                       (train_l, train_acc, None))
             test_acc = evaluate_accuracy(self.mod, self.test_iter, ctx=self.ctx)
             
-            logger.info(f"epoch {epoch:05d}: ctx {self.ctx}, loss {train_l:.5g}, train acc {train_acc:.5g}, test acc {test_acc:.5g}")
+            logger.debug(f"epoch {epoch:05d}: ctx {self.ctx}, loss {train_l:.5g}, train acc {train_acc:.5g}, test acc {test_acc:.5g}")
             self.animator.add(epoch + 1, (None, None, test_acc))
             if hasattr(self, "scheduler"):
                 self.scheduler.step()
@@ -117,7 +117,7 @@ class Classifier:
                 }
                 path = checkpoint_dir/f'epoch_{epoch+1}.pth'
                 torch.save(checkpoint, path)
-                logger.info(f"Saved checkpoint to {path}")
+                logger.debug(f"Saved checkpoint to {path}")
                 if test_acc > best_acc:
                     best_acc = test_acc
                     torch.save(self.mod.state_dict(), checkpoint_dir/f'best_model_params.pth')
