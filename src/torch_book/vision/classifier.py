@@ -9,6 +9,8 @@ from taolib.protocol.timer import Timer
 from taolib.plot.animator import Animator
 from .utils import Accumulator
 
+logger = logging.getLogger(__name__)
+
 reduce_sum = lambda x, *args, **kwargs: x.sum(*args, **kwargs)
 argmax = lambda x, *args, **kwargs: x.argmax(*args, **kwargs)
 astype = lambda x, *args, **kwargs: x.type(*args, **kwargs)
@@ -54,7 +56,7 @@ class Classifier:
     timer: Timer
 
     def __post_init__(self):
-        logging.info(f'training on {self.ctx}')
+        logger.info(f'training on {self.ctx}')
         self.num_batches = len(self.train_iter)
         # def init_weights(m):
         #     if type(m) == nn.Linear or type(m) == nn.Conv2d:
@@ -62,28 +64,24 @@ class Classifier:
         # self.mod.apply(init_weights)
         self.mod.to(self.ctx)
         
-    def fit(self, num_epochs, checkpoint_dir=None, checkpoint_interval=1, resume_from=None,):
+    def fit(self, num_epochs, checkpoint_dir=None, checkpoint_interval=1, resume_from=None, start_epoch = 0):
         """训练模型"""
         if checkpoint_dir:
             checkpoint_dir = Path(checkpoint_dir)
             checkpoint_dir.mkdir(parents=True, exist_ok=True)
             torch.save(self.mod.state_dict(), checkpoint_dir/f'best_model_params.pth')
         self.animator = Animator(
-            xlabel='epoch', xlim=[1, num_epochs], ylim=[0, 1],
+            xlabel='epoch', xlim=[start_epoch, start_epoch+num_epochs], ylim=[0, 1],
             legend=['train loss', 'train acc', 'test acc']
         )
         # 断点恢复逻辑
-        start_epoch = 0
+        
         if resume_from:
             checkpoint = torch.load(resume_from, map_location=torch.device(self.ctx))
-            self.mod.load_state_dict(checkpoint['model'])
-            self.optimizer.load_state_dict(checkpoint['optimizer'])
-            if hasattr(self, 'scheduler') and checkpoint.get('scheduler'):
-                self.scheduler.load_state_dict(checkpoint['scheduler'])
-            start_epoch = checkpoint['epoch'] + 1
-            logging.info(f"Resumed training from epoch {start_epoch}")
+            self.mod.load_state_dict(checkpoint)
+            logger.info(f"Resumed training from epoch {start_epoch}")
         best_acc = 0.0
-        for epoch in range(num_epochs):
+        for epoch in range(start_epoch, num_epochs+start_epoch):
             # 训练损失之和，训练准确率之和，样本数
             metric = Accumulator(3)
             self.mod.train()
@@ -105,7 +103,7 @@ class Classifier:
                                       (train_l, train_acc, None))
             test_acc = evaluate_accuracy(self.mod, self.test_iter, ctx=self.ctx)
             
-            logging.info(f"epoch {epoch:05d}: ctx {self.ctx}, loss {train_l:.5g}, train acc {train_acc:.5g}, test acc {test_acc:.5g}")
+            logger.info(f"epoch {epoch:05d}: ctx {self.ctx}, loss {train_l:.5g}, train acc {train_acc:.5g}, test acc {test_acc:.5g}")
             self.animator.add(epoch + 1, (None, None, test_acc))
             if hasattr(self, "scheduler"):
                 self.scheduler.step()
@@ -119,11 +117,11 @@ class Classifier:
                 }
                 path = checkpoint_dir/f'epoch_{epoch+1}.pth'
                 torch.save(checkpoint, path)
-                logging.info(f"Saved checkpoint to {path}")
+                logger.info(f"Saved checkpoint to {path}")
                 if test_acc > best_acc:
                     best_acc = test_acc
                     torch.save(self.mod.state_dict(), checkpoint_dir/f'best_model_params.pth')
-        logging.info(
+        logger.info(
             f"loss {train_l:.5g}, train acc {train_acc:.5g}, test acc {test_acc:.5g}")
-        logging.info(
+        logger.info(
             f"{metric[2] * num_epochs / self.timer.sum():.5g} examples/sec on {str(self.ctx)}")
