@@ -64,14 +64,14 @@ class Classifier:
         # self.mod.apply(init_weights)
         self.mod.to(self.ctx)
         
-    def fit(self, num_epochs, checkpoint_dir=None, checkpoint_interval=1, resume_from=None, start_epoch = 0):
+    def fit(self, num_epochs, ylim=[0, 1], checkpoint_dir=None, checkpoint_interval=1, resume_from=None, start_epoch = 0):
         """训练模型"""
         if checkpoint_dir:
             checkpoint_dir = Path(checkpoint_dir)
             checkpoint_dir.mkdir(parents=True, exist_ok=True)
             torch.save(self.mod.state_dict(), checkpoint_dir/f'best_model_params.pth')
         self.animator = Animator(
-            xlabel='epoch', xlim=[start_epoch, start_epoch+num_epochs], ylim=[0, 1],
+            xlabel='epoch', xlim=[start_epoch, start_epoch+num_epochs], ylim=ylim,
             legend=['train loss', 'train acc', 'test acc']
         )
         # 断点恢复逻辑
