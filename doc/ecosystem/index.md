@@ -6,6 +6,7 @@
 tutorials/index
 ExecuTorch/index
 torchao/index
+SLRT/index
 ultralytics/index
 torchtune/index
 Captum/index
