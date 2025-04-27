@@ -3,4 +3,5 @@
 ```{toctree}
 Set5
 DIV2K
+CelebA
 ```
