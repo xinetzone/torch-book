@@ -27,5 +27,7 @@ YOLOv8|无锚框|resize(640, 640, 3)|Darknet-53（C3模块换成了C2F模块）|
 yolov1
 yolov2
 yolov3
+yolov5s
+yolov11s
 ref/index
 ```
