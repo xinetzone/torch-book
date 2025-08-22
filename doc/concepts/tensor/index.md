@@ -4,4 +4,7 @@
 
 ```{toctree}
 internals
+meta
+meta-tensor
+FakeTensorMode
 ```

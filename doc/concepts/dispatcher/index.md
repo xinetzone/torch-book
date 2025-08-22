@@ -22,6 +22,7 @@
 
 ```{toctree}
 intro
-extending-torch-python-api
+extending-torch-python-api/index
 TorchDispatchMode
+FlopCounterMode
 ```
