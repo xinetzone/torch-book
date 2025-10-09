@@ -45,10 +45,9 @@ jobs:
           sudo apt-get install graphviz
           apt-get update && sudo apt-get upgrade
           pip install --upgrade pip
-          pip install -ve .[doc,flows] --upgrade
           git clone --recursive https://github.com/xinetzone/maple-font.git
           cd maple-font
-          pip install -ve .
+          pip install -ve .[doc,flows,dev]
           maple-font build --full
           conda install -c conda-forge pandoc compilers podman
       - name: 🔧 Build HTML

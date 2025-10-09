@@ -1,11 +1,11 @@
 [project]
 name = "torch-book"
-version = "0.1.1"
+version = "0.1.2"
 description = "道法自然"
 authors = [
     {name = "xinetzone", email = "735613050@qq.com"},
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 readme = "README.md"
 license = {file = "LICENSE"}
 maintainers = [
@@ -18,7 +18,7 @@ Home = "https://github.com/xinetzone/torch-book"
 
 [project.optional-dependencies]
 doc = [
-    "xyzstyle",
+    "mystx",
     "sphinx",
     # "ablog",
     "ipywidgets",
@@ -26,7 +26,6 @@ doc = [
     "numpy",
     "matplotlib",
     "sphinx-comments",
-    "myst-nb",
     "nbclient",
     "pandas",
     "plotly",
