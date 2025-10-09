@@ -25,7 +25,7 @@ locale_dirs = ['../locales/']  # po files will be created in this directory
 # Sphinx 自带的插件（命名为 'sphinx.ext.*'）或您自定义的插件。
 # -------------------------------------------------------------------------------------
 extensions = [
-    "myst_nb",
+    "mystx",
     "sphinx_design",
     'autoapi.extension', # 自动生成API文档
     "sphinx.ext.viewcode", # 添加到高亮源代码的链接
@@ -69,7 +69,7 @@ copybutton_selector = ":not(.prompt) > div.highlight pre"
 # == HTML 输出 =======================================================================================
 # 用于 HTML 和 HTML Help 页面的主题
 # -------------------------------------------------------------------------------------
-html_theme = 'xyzstyle' # 使用的主题名称
+html_theme = 'mystx' # 使用的主题名称
 html_logo = "_static/images/logo.jpg"
 html_title = "AI World" # 网站标题
 html_copy_source = True
