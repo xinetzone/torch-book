@@ -28,33 +28,31 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@main
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
       - name: Checkout
         uses: actions/checkout@main
-      - name: 🐍 Set up Python 3
+      - name: 🐍 Set up Python
         uses: actions/setup-python@main
         with:
           python-version: "3.12"
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-      - name: Setup TeXLive
-        uses: teatimeguest/setup-texlive-action@v3
-        with:
-          version: 2024
-          packages: |
-            scheme-basic
-            hyperref
-            microtype
-      - name: 🔧 Build HTML
+      - name: 🔧 PyPI 配置
         run: |
           sudo apt-get install graphviz
-          sudo apt-get update && sudo apt-get upgrade
-          sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev ffmpeg
+          apt-get update && sudo apt-get upgrade
           pip install --upgrade pip
-          pip install sphinxcontrib-websupport
-          pip install .[doc,dev,flows] --upgrade
-          conda install -c conda-forge pandoc compilers cppyy
-          conda install -c conda-forge ffmpeg manim
-          pip install manim
+          pip install -ve .[doc,flows] --upgrade
+          git clone --recursive https://github.com/xinetzone/maple-font.git
+          cd maple-font
+          pip install -ve .
+          maple-font build --full
+          conda install -c conda-forge pandoc compilers podman
+      - name: 🔧 Build HTML
+        run: |
           invoke doc
       - name: Setup Pages
         uses: actions/configure-pages@main
