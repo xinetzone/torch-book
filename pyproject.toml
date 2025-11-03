@@ -20,6 +20,8 @@ Home = "https://github.com/xinetzone/torch-book"
 doc = [
     "mystx",
     "sphinx",
+    "myst_nb",
+    "sphinx-book-theme",
     # "ablog",
     "ipywidgets",
     "folium",
