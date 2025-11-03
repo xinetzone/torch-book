@@ -49,7 +49,7 @@
 需要安装 `torch-book` 包：
 
 ```shell
-pip install torch-book
+pip install torch-book<=0.1.1
 ```
 
 ## 开发指南
