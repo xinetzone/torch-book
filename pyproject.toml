@@ -22,7 +22,8 @@ doc = [
     "myst-nb",
     "sphinx-book-theme",
     "sphinx",
-    # "ablog",
+    "ablog",
+    "sphinx_tippy",
     "sphinx-comments",
     "sphinx-design",
     "sphinx-examples",
@@ -36,6 +37,7 @@ doc = [
     "graphviz",
     "sphinxcontrib-mermaid",
     "sphinx-proof",
+    "nbsphinx",
 ]
 
 flows = [
