@@ -11,7 +11,7 @@ environment-specific configurations to produce high-quality documentation.
 import os
 import sys
 from pathlib import Path
-
+from importlib.metadata import version as _pkg_version
 # === Platform-Specific Configuration ===
 if sys.platform == 'win32':
     import asyncio
@@ -35,11 +35,7 @@ if TIPPY_LOCAL_SRC.exists():
 # ================================= 项目基本信息 =================================
 project = "torch-book"  # 文档项目名称
 author = "xinetzone"    # 文档作者
-try:
-    from importlib.metadata import version as _pkg_version
-    release = _pkg_version("taolib")
-except Exception:
-    release = os.environ.get("TAOLIB_VERSION", "0.0.0")
+release = _pkg_version("torch-book")
 copyright = '2021, xinetzone'  # 版权信息
 # ================================= 国际化与本地化设置 ==============================
 language = 'zh_CN'       # 文档语言（中文简体）
