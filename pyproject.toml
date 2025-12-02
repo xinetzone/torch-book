@@ -41,7 +41,7 @@ doc = [
 ]
 
 flows = [
-    "taolib[flows]",
+    "taolib[dev]",
 ]
 
 gui = [

@@ -24,7 +24,6 @@ def get_project_root():
 
 ROOT = get_project_root()
 sys.path.extend([str(ROOT/'doc')])
-from taolib import get_version  # 引入获取版本号的函数
 
 # === 注入本地修复版 sphinx_tippy 扩展路径 ===
 # 说明：为修复 Wikipedia 抓取告警，优先加载仓库内修复版扩展。
@@ -36,7 +35,11 @@ if TIPPY_LOCAL_SRC.exists():
 # ================================= 项目基本信息 =================================
 project = "torch-book"  # 文档项目名称
 author = "xinetzone"    # 文档作者
-release = get_version("torch-book")  # 获取torch-book的版本号
+try:
+    from importlib.metadata import version as _pkg_version
+    release = _pkg_version("taolib")
+except Exception:
+    release = os.environ.get("TAOLIB_VERSION", "0.0.0")
 copyright = '2021, xinetzone'  # 版权信息
 # ================================= 国际化与本地化设置 ==============================
 language = 'zh_CN'       # 文档语言（中文简体）
