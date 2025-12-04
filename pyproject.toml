@@ -56,7 +56,8 @@ dev = [
   # "ipywidgets",
   # "folium",
   "numpy",
-  "torchvision"
+  "torchvision",
+  "torchaudio",
   "matplotlib",
   # "nbclient",
   # "pandas",
