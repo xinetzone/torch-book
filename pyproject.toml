@@ -51,7 +51,7 @@ gui = [
 
 dev = [
   "torchao",
-  "executorch",
+  # "executorch",
   "ultralytics",
   # "ipywidgets",
   # "folium",
