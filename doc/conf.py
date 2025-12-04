@@ -35,7 +35,10 @@ if TIPPY_LOCAL_SRC.exists():
 # ================================= 项目基本信息 =================================
 project = "torch-book"  # 文档项目名称
 author = "xinetzone"    # 文档作者
-release = _pkg_version("torch-book")
+try:
+    release = _pkg_version("torch-book")
+except Exception:
+    release = os.environ.get("TORCH_BOOK_VERSION", "dev")
 copyright = '2021, xinetzone'  # 版权信息
 # ================================= 国际化与本地化设置 ==============================
 language = 'zh_CN'       # 文档语言（中文简体）
@@ -114,8 +117,8 @@ version_switcher_json_url = "https://torch-book.readthedocs.io/zh-cn/latest/_sta
 # 链接到其他项目的文档
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3.12", None),
-    "sphinx": ("https://daobook.github.io/sphinx/", None),
-    "pst": ("https://daobook.github.io/pydata-sphinx-theme/", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "pst": ("https://pydata-sphinx-theme.readthedocs.io/en/latest/", None),
 }
 
 # 缩短外部链接
@@ -187,7 +190,7 @@ sitemap_locales = [None]  # 语言列表
 # === Custom Sidebars ===
 extensions.append("ablog")
 html_sidebars = {
-    "blog/**/**": [
+    "blog/**": [
         "navbar-logo.html",
         "search-field.html",
         "ablog/postcard.html",
@@ -220,7 +223,8 @@ suppress_warnings = [
     "autoapi.python_import_resolution", 
     "autoapi.not_readable",
 ]
-nb_execution_mode = "cache"
+nb_execution_mode = "off"
+nb_execution_raise_on_error = True
 # nb_ipywidgets_js = {
 #     # "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js": {
 #     #     "integrity": "sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=",

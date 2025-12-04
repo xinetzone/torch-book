@@ -46,6 +46,7 @@ jobs:
           apt-get update && sudo apt-get upgrade
           pip install --upgrade pip
           pip install -ve .[doc,flows,dev]
+          conda install -c conda-forge torchcodec
       - name: 🔧 Build HTML
         run: |
           invoke doc

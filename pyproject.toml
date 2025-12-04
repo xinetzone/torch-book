@@ -42,6 +42,7 @@ doc = [
 
 flows = [
     "taolib[dev]",
+    "httpx",
 ]
 
 gui = [
@@ -54,8 +55,9 @@ dev = [
   "ultralytics",
   # "ipywidgets",
   # "folium",
-  # "numpy",
-  # "matplotlib",
+  "numpy",
+  "torchvision"
+  "matplotlib",
   # "nbclient",
   # "pandas",
   # "plotly",
